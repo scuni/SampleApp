@@ -4,7 +4,7 @@
       <div class="ui-panel2">
         <div class="dropdown-toggle" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true"
              aria-expanded="true">
-          <p id="Balance">{{ Balance }}{{ CurrencySymbol }} <span class="caret"></span></p>
+          <p id="Balance">{{ Balance }} <CurrencyIcon v-bind:Currency='Currency' v-bind:Width='15'></CurrencyIcon> <span class="caret"></span></p>
         </div>
         <ul class="dropdown-menu" aria-labelledby="currencyMenu">
           <li v-for="currency in Currencies"><a href="#" v-on:click.prevent="onCurrencyChange(currency.value)">{{ currency.name }}</a></li>
@@ -60,16 +60,19 @@
 <script>
   import {mapGetters} from 'vuex'
   import {currencies} from '../currencies'
+  import CurrencyIcon from '@/components/CurrencyIcon'
 
   export default {
     name: 'StatsBar',
     data: () => ({
       Currencies: currencies
     }),
+    components: {
+      CurrencyIcon
+    },
     computed: mapGetters({
       Balance: 'Balance',
       Currency: 'Currency',
-      CurrencySymbol: 'CurrencySymbol',
       NumBets: 'NumBets',
       MaxWin: 'MaxWin',
       Bankroll: 'Bankroll',

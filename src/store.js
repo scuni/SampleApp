@@ -8,7 +8,6 @@ import * as types from './mutation-types'
 import api from './api'
 import hub from './hub'
 import Settings from './settings'
-import {formatCurrency} from './helpers'
 import {addToBetsList, createBet} from './bets-helpers'
 
 Vue.use(Vuex)
@@ -16,7 +15,6 @@ Vue.use(Vuex)
 const state = {
   Balance: 0,
   Currency: 0,
-  CurrencySymbol: 'F',
   UserName: '',
   IsAuthenticated: false,
   WaitingOnBetResult: false,
@@ -61,7 +59,6 @@ const mutations = {
   },
   [types.SET_CURRENCY] (state, currency) {
     state.Currency = currency
-    state.CurrencySymbol = formatCurrency(currency)
   },
   [types.SET_BALANCE] (state, {Balance, Currency}) {
     if (state.Currency === Currency) {
@@ -262,7 +259,6 @@ const getters = {
   AppName: state => Settings.AppName,
   Balance: state => state.Balance,
   Currency: state => state.Currency,
-  CurrencySymbol: state => state.CurrencySymbol,
   NumBets: state => state.NumBets,
   MaxWin: state => state.MaxWin,
   Bankroll: state => state.Bankroll,

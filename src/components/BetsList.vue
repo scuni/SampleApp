@@ -17,7 +17,7 @@
       <td class="red-text">{{ bet.BetId }}</td>
       <td class="red-text">{{ bet.Player }}</td>
       <td>{{ bet.Time }}</td>
-      <td>{{ bet.BetAmount.toFixed(8) }}{{ bet.Currency }}</td>
+      <td>{{ bet.BetAmount.toFixed(8) }} <CurrencyIcon v-bind:CurrencySymbol='bet.Currency' v-bind:Width='12'></CurrencyIcon></td>
       <td class="hidden-xs">{{ bet.Payout }}x</td>
       <td class="hidden-xs">{{ bet.Target }}</td>
       <td>{{ bet.Roll.toFixed(4) }}</td>
@@ -81,6 +81,8 @@
 </style>
 
 <script>
+  import CurrencyIcon from '@/components/CurrencyIcon'
+
   export default {
     name: 'BetsList',
     props: {
@@ -88,6 +90,9 @@
         type: Array,
         default: () => []
       }
+    },
+    components: {
+      CurrencyIcon
     },
     methods: {
       formatProfit: function (x) {
