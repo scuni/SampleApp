@@ -5,6 +5,7 @@
       <th>Bet #</th>
       <th>Player</th>
       <th>Time</th>
+      <th>Currency</th>
       <th>Bet</th>
       <th class="hidden-xs">Payout</th>
       <th class="hidden-xs">Target</th>
@@ -17,11 +18,12 @@
       <td class="red-text">{{ bet.BetId }}</td>
       <td class="red-text">{{ bet.Player }}</td>
       <td>{{ bet.Time }}</td>
-      <td>{{ bet.BetAmount.toFixed(8) }} <CurrencyIcon v-bind:CurrencySymbol='bet.Currency' v-bind:Width='12'></CurrencyIcon></td>
+      <td><CurrencyIcon v-bind:CurrencySymbol='bet.Currency' v-bind:Width='12'></CurrencyIcon></td>
+      <td>{{ bet.BetAmount.toFixed(8) }}</td>
       <td class="hidden-xs">{{ bet.Payout }}x</td>
       <td class="hidden-xs">{{ bet.Target }}</td>
       <td>{{ bet.Roll.toFixed(4) }}</td>
-      <td v-bind:class="formatProfit(bet.Profit)">{{ bet.Profit.toFixed(8) }} <CurrencyIcon v-bind:CurrencySymbol='bet.Currency' v-bind:Width='12'></CurrencyIcon></td>
+      <td v-bind:class="formatProfit(bet.Profit)">{{ bet.Profit.toFixed(8) }}</td>
     </tr>
     </tbody>
   </table>
