@@ -124,7 +124,7 @@ const actions = {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency})
     })
     api.getStats(currency).then(function (response) {
-      commit(types.SET_STATS, {Currency: state.Currency, ...response.data})
+      commit(types.SET_STATS, {Currency: currency, ...response.data})
     })
   },
   showRegisterDialog ({commit}) {
