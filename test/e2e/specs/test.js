@@ -12,7 +12,6 @@ module.exports = {
       .url(devServer)
       .waitForElementVisible('#app', 5000)
       .assert.elementPresent('.navbar')
-      .assert.containsText('h4', 'Sample App')
       .end()
   }
 }
