@@ -21,7 +21,7 @@
       <td class="hidden-xs">{{ bet.Payout }}x</td>
       <td class="hidden-xs">{{ bet.Target }}</td>
       <td>{{ bet.Roll.toFixed(4) }}</td>
-      <td v-bind:class="formatProfit(bet.Profit)">{{ bet.Profit.toFixed(8) }}{{ bet.Currency }}</td>
+      <td v-bind:class="formatProfit(bet.Profit)">{{ bet.Profit.toFixed(8) }}{{ bet.Currency }} <CurrencyIcon v-bind:CurrencySymbol='bet.Currency' v-bind:Width='12'></CurrencyIcon></td>
     </tr>
     </tbody>
   </table>
