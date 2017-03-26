@@ -21,13 +21,9 @@ settings = {
   AppUrl: 'URL_OF_YOUR_APP'
 }
 ```
-## Installation
-
-`npm install`
-
-`npm run build`
-
 ## Build your app
+
+You need Node 6.10.0 or higher to build the project.
 
 ``` bash
 # install dependencies
@@ -47,6 +43,8 @@ npm run unit
 
 # run e2e tests
 npm run e2e
+
+Java must be installed to run ete tests using Selenium.
 
 # run all tests
 npm test
