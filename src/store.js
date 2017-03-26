@@ -124,7 +124,7 @@ const actions = {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency})
     })
     api.getStats(currency).then(function (response) {
-      commit(types.SET_STATS, response.data)
+      commit(types.SET_STATS, {Currency: state.Currency, ...response.data})
     })
   },
   showRegisterDialog ({commit}) {
@@ -165,7 +165,7 @@ const actions = {
   loadState ({commit, state}, clientSeed) {
     api.loadState(state.Currency, clientSeed).then(function (response) {
       const data = response.data
-      commit(types.SET_STATS, data)
+      commit(types.SET_STATS, {Currency: state.Currency, ...data})
 
       if (data.UserName !== '') {
         commit(types.SET_USERNAME, data.UserName)
