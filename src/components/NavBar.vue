@@ -62,7 +62,7 @@
         this.$store.dispatch('showRegisterDialog')
       },
       openDepositWindow: function () {
-        const url = Settings.BetKingUrlBase + '/apps/deposit?appId=' + Settings.AppId
+        const url = Settings.BetKingUrlBase + 'apps/deposit?appId=' + Settings.AppId
         const name = 'App Deposit'
         const options = [
           'width=500',
@@ -74,7 +74,7 @@
         w.focus()
       },
       openWithdrawWindow: function () {
-        const url = Settings.BetKingUrlBase + '/apps/withdraw?appId=' + Settings.AppId
+        const url = Settings.BetKingUrlBase + 'apps/withdraw?appId=' + Settings.AppId
         const name = 'App Withdraw'
         const options = [
           'width=500',
