@@ -9,6 +9,7 @@ import api from './api'
 import hub from './hub'
 import Settings from './settings'
 import {addToBetsList, createBet} from './bets-helpers'
+import {currencies} from './currencies'
 
 Vue.use(Vuex)
 
@@ -230,10 +231,10 @@ const actions = {
       }
     })
 
-    socketHub.on('newDeposit', (balance, currency, appId) => {
+    socketHub.on('newDeposit', (balance, amount, currency, appId) => {
       if (Settings.AppId === appId) {
         commit(types.SET_BALANCE, {Balance: balance, Currency: currency})
-        toastr.info('New deposit of  received')
+        toastr.info('New deposit of ' + amount + ' ' + currencies[currency].code + ' received')
       }
     })
 
