@@ -200,7 +200,7 @@
       NavBar,
       BetControls
     },
-    mounted: function () {
+    mounted () {
       document.title = settings.AppName
       if (this.getHashParams().access_token) {
         this.$store.dispatch('login', {

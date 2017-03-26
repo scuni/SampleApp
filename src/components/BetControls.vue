@@ -9,7 +9,7 @@
               <div class="input-group">
                 <input id="betAmount" v-model="BetAmount" v-on:keyup="updateProfit" class="form-control"
                        type="text" autocomplete="off">
-                <span class="input-group-addon">{{ CurrencySymbol }}</span>
+                <span class="input-group-addon"><CurrencyIcon v-bind:Currency='Currency' v-bind:Width='20'></CurrencyIcon></span>
               </div>
             </div>
           </div>
@@ -19,7 +19,7 @@
               <div class="input-group">
                 <input id="betProfit" disabled v-model="BetProfit" class="form-control" type="text"
                        autocomplete="off">
-                <span class="input-group-addon">{{ CurrencySymbol }}</span>
+                <span class="input-group-addon"><CurrencyIcon v-bind:Currency='Currency' v-bind:Width='20'></CurrencyIcon></span>
               </div>
             </div>
           </div>
@@ -127,29 +127,28 @@
 </style>
 <script>
   import toastr from 'toastr'
-  import ProvablyFairModal from './ProvablyFairModal.vue'
-  import {formatDecimal} from './../helpers'
   import {mapGetters} from 'vuex'
+  import ProvablyFairModal from '@/components/ProvablyFairModal'
+  import CurrencyIcon from '@/components/CurrencyIcon'
+  import {formatDecimal} from './../helpers'
 
   export default {
     name: 'BetControls',
-    data: function () {
-      return {
-        Chance: 49.5,
-        BetAmount: 0,
-        BetProfit: 0,
-        Payout: 2,
-        LoTarget: '< 49.5000',
-        HiTarget: '> 50.4999'
-      }
-    },
+    data: () => ({
+      Chance: 49.5,
+      BetAmount: 0,
+      BetProfit: 0,
+      Payout: 2,
+      LoTarget: '< 49.5000',
+      HiTarget: '> 50.4999'
+    }),
     components: {
-      ProvablyFairModal
+      ProvablyFairModal,
+      CurrencyIcon
     },
     computed: mapGetters({
       WaitingOnBetResult: 'WaitingOnBetResult',
       Currency: 'Currency',
-      CurrencySymbol: 'CurrencySymbol',
       ProvablyFairDialogVisible: 'ProvablyFairDialogVisible'
     }),
     methods: {
