@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import toastr from 'toastr'
 import Settings from './settings'
+import {catchErr} from './helpers'
 
 const headers = () => ({ headers: { Authorization: `Bearer ${Cookies.get('token')}` } })
 
@@ -13,20 +13,13 @@ export default {
       betAmount: betAmount,
       target: target,
       currency: currency
-    },
-    { headers: { Authorization: `Bearer ${Cookies.get('token')}` } }).catch((error) => {
-      if (error.response) {
-        if (error.response.status === 401) {
-          toastr.error('You must be logged in')
-        }
-      }
-    })
+    }, headers()).catch(catchErr)
   },
   logout () {
     return axios.post(`${Settings.ApiBase}api/logout`, {appId: Settings.AppId}, headers())
   },
   getBalance (currency) {
-    return axios.get(`${Settings.ApiBase}api/account/balancecurrency=${currency}&appId=${Settings.AppId}`, headers())
+    return axios.get(`${Settings.ApiBase}api/account/balance?currency=${currency}&appId=${Settings.AppId}`, headers())
   },
   getDiceSeed (clientSeed) {
     return axios.get(`${Settings.ApiBase}api/dice/getseed?appId=${Settings.AppId}&clientSeed=${clientSeed}`, headers())
@@ -35,25 +28,13 @@ export default {
     return axios.post(`${Settings.ApiBase}api/dice/saveClientSeed`, {
       appId: Settings.AppId,
       clientSeed: clientSeed
-    }, headers()).catch((error) => {
-      if (error.response) {
-        if (error.response.status === 401) {
-          toastr.error('You must be logged in')
-        }
-      }
-    })
+    }, headers()).catch(catchErr)
   },
   generateNewServerSeed (clientSeed) {
     return axios.post(`${Settings.ApiBase}api/dice/generateNewServerSeed`, {
       appId: Settings.AppId,
       clientSeed: clientSeed
-    }, headers()).catch((error) => {
-      if (error.response) {
-        if (error.response.status === 401) {
-          toastr.error('You must be logged in')
-        }
-      }
-    })
+    }, headers()).catch(catchErr)
   },
   getStats (currency) {
     return axios.get(`${Settings.ApiBase}api/stats/getstats?currency=${currency}&appId=${Settings.AppId}`)
@@ -63,7 +44,6 @@ export default {
     if (Cookies.get('token') !== undefined) {
       bearerHeaders = headers()
     }
-
     return axios.get(`${Settings.ApiBase}api/app/loadstate?currency=${currency}&appId=${Settings.AppId}&clientSeed=${clientSeed}`, bearerHeaders)
   }
 }
