@@ -239,7 +239,7 @@
         this.$store.dispatch('hideProvablyFairDialog')
       },
       updateBetAmount: function () {       
-        if(isNan(parseFloat(this.BetProfit))){
+        if(isNaN(parseFloat(this.BetProfit))){
           this.BetAmount = 0 
         } else if (this.BetProfit > 0){
           var p = this.BetProfit / (this.Payout-1)
