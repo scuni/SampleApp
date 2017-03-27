@@ -1,4 +1,5 @@
 import {currencies} from './currencies'
+import toastr from 'toastr'
 
 export const formatCurrency = (c) => {
   return currencies.find(currency => currency.value === c).symbol
@@ -36,5 +37,15 @@ export const setInputNumeric = (event, inputText) => {
     isControlKey ||
     (event.which === 46 && (inputText.indexOf('.') > -1 === false)))) {
     event.preventDefault()
+  }
+}
+
+export const catchErr = (error) => {
+  if (error.response) {
+    if (error.response.status === 401) {
+      toastr.error('You must be logged in')
+    }else{
+      toastr.error('An error occured')
+    }
   }
 }
