@@ -7,7 +7,14 @@ const headers = () => ({ headers: { Authorization: `Bearer ${Cookies.get('token'
 
 export default {
   bet (chance, betAmount, target, currency) {
-    return axios.post(`${Settings.ApiBase}api/dice/bet?appId=${Settings.AppId}&chance=${chance}&betAmount=${betAmount}&target=${target}&currency=${currency}`, {}, { headers: { Authorization: `Bearer ${Cookies.get('token')}` } }).catch((error) => {
+    return axios.post(`${Settings.ApiBase}api/dice/bet`, {
+      appId: Settings.AppId,
+      chance: chance,
+      betAmount: betAmount,
+      target: target,
+      currency: currency
+    },
+    { headers: { Authorization: `Bearer ${Cookies.get('token')}` } }).catch((error) => {
       if (error.response) {
         if (error.response.status === 401) {
           toastr.error('You must be logged in')
@@ -16,16 +23,19 @@ export default {
     })
   },
   logout () {
-    return axios.post(`${Settings.ApiBase}api/logout?appId=${Settings.AppId}`, {}, headers())
+    return axios.post(`${Settings.ApiBase}api/logout`, {appId: Settings.AppId}, headers())
   },
   getBalance (currency) {
-    return axios.get(`${Settings.ApiBase}api/account/balance?currency=${currency}&appId=${Settings.AppId}`, headers())
+    return axios.get(`${Settings.ApiBase}api/account/balancecurrency=${currency}&appId=${Settings.AppId}`, headers())
   },
   getDiceSeed (clientSeed) {
     return axios.get(`${Settings.ApiBase}api/dice/getseed?appId=${Settings.AppId}&clientSeed=${clientSeed}`, headers())
   },
   saveClientSeed (clientSeed) {
-    return axios.post(`${Settings.ApiBase}api/dice/saveClientSeed?appId=${Settings.AppId}&clientSeed=${clientSeed}`, {}, headers()).catch((error) => {
+    return axios.post(`${Settings.ApiBase}api/dice/saveClientSeed`, {
+      appId: Settings.AppId,
+      clientSeed: clientSeed
+    }, headers()).catch((error) => {
       if (error.response) {
         if (error.response.status === 401) {
           toastr.error('You must be logged in')
@@ -34,7 +44,10 @@ export default {
     })
   },
   generateNewServerSeed (clientSeed) {
-    return axios.post(`${Settings.ApiBase}api/dice/generateNewServerSeed?appId=${Settings.AppId}&clientSeed=${clientSeed}`, {}, headers()).catch((error) => {
+    return axios.post(`${Settings.ApiBase}api/dice/generateNewServerSeed`, {
+      appId: Settings.AppId,
+      clientSeed: clientSeed
+    }, headers()).catch((error) => {
       if (error.response) {
         if (error.response.status === 401) {
           toastr.error('You must be logged in')
