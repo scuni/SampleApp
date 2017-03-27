@@ -17,7 +17,7 @@
             <div class="form-group">
               <label class="label-control" for="chance">Profit</label>
               <div class="input-group">
-                <input id="betProfit" disabled v-model="BetProfit" class="form-control" type="text"
+                <input id="betProfit" v-model="BetProfit" v-on:keyup="updateBetAmount" class="form-control" type="text"
                        autocomplete="off">
                 <span class="input-group-addon"><CurrencyIcon v-bind:Currency='Currency' v-bind:Width='20'></CurrencyIcon></span>
               </div>
@@ -150,6 +150,7 @@
     computed: mapGetters({
       WaitingOnBetResult: 'WaitingOnBetResult',
       Currency: 'Currency',
+      Balance: 'Balance',
       ProvablyFairDialogVisible: 'ProvablyFairDialogVisible'
     }),
     methods: {
@@ -210,7 +211,6 @@
           if (fp > 990000) {
             fp = 990000
           }
-
           var c = 99 / fp
 
           c = formatDecimal(c, 4)
@@ -237,6 +237,20 @@
       },
       hideProvablyFairDialog: function () {
         this.$store.dispatch('hideProvablyFairDialog')
+      },
+      updateBetAmount: function () {       
+        if(isNan(parseFloat(this.BetProfit))){
+          this.BetAmount = 0 
+        } else if (this.BetProfit > 0){
+          var p = this.BetProfit / (this.Payout-1)
+            if(p > this.Balance){
+              p = this.Balance
+            }          
+          this.BetAmount = formatDecimal(p, 8)
+        } else {
+          this.BetAmount = 0
+        }
+        this.updateProfit()
       }
     }
   }
