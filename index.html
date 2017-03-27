@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title }}</title>
+  <title></title>
 </head>
 <body>
 <div id="app"></div>
@@ -12,12 +12,8 @@
   window.settings = {
     AppId: 1,
     AppName: 'Sample App',
-    AppUrl: 'https://bkp1sa.azurewebsites.net/',
-    AppHost: 'bkp1sa.azurewebsites.net'
+    AppUrl: 'https://bkp1sa.azurewebsites.net/'
   }
-    if (window.location.host == window.settings.AppHost && window.location.protocol != 'https:') { 
-        window.location.protocol = 'https:';
-    }
 </script>
 <!-- built files will be auto injected -->
 </body>

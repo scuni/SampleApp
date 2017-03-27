@@ -40,12 +40,8 @@ export const setInputNumeric = (event, inputText) => {
   }
 }
 
-export const catchErr = (error) => {
+export const showError = (error) => {
   if (error.response) {
-    if (error.response.status === 401) {
-      toastr.error('You must be logged in')
-    } else {
-      toastr.error('An error occured')
-    }
+    toastr.error(error.response.status === 401 ? 'You must be logged in' : 'An error occured')
   }
 }

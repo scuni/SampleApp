@@ -126,12 +126,12 @@
   }
 </style>
 <script>
-  import Cookies from 'js-cookie'
   import toastr from 'toastr'
   import {mapGetters} from 'vuex'
   import ProvablyFairModal from '@/components/ProvablyFairModal'
   import CurrencyIcon from '@/components/CurrencyIcon'
   import {formatDecimal} from './../helpers'
+  import token from './../token'
 
   export default {
     name: 'BetControls',
@@ -154,7 +154,7 @@
     }),
     methods: {
       bet: function (target) {
-        if (Cookies.get('token') === undefined) {
+        if (token.isNotDefined()) {
           toastr.error('You must be login to make a bet')
           return
         }

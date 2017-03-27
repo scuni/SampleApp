@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Cookies from 'js-cookie'
 import $ from 'jquery'
 import 'ms-signalr-client'
 import toastr from 'toastr'
@@ -10,7 +9,8 @@ import hub from './hub'
 import Settings from './settings'
 import {addToBetsList, createBet} from './bets-helpers'
 import {currencies} from './currencies'
-import {catchErr} from './helpers'
+import {showError} from './helpers'
+import token from './token'
 
 Vue.use(Vuex)
 
@@ -123,10 +123,10 @@ const actions = {
     commit(types.SET_CURRENCY, currency)
     api.getBalance(currency).then(function (response) {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency})
-    }).catch(catchErr)
+    }).catch(showError)
     api.getStats(currency).then(function (response) {
       commit(types.SET_STATS, {Currency: currency, ...response.data})
-    }).catch(catchErr)
+    }).catch(showError)
   },
   showRegisterDialog ({commit}) {
     commit(types.SET_REGISTER_DIALOG, true)
@@ -143,9 +143,9 @@ const actions = {
   logout ({commit, state}) {
     api.logout().then(() => {
       commit(types.RESET_USER)
-      Cookies.remove('token')
+      token.remove()
       hub.restart(state.Signalr)
-    }).catch(catchErr)
+    }).catch(showError)
   },
   saveClientSeed ({commit}, clientSeed) {
     api.saveClientSeed(clientSeed)
@@ -155,9 +155,8 @@ const actions = {
   },
   login ({commit}, data) {
     commit(types.RESET_USER)
-    Cookies.remove('token')
-
-    Cookies.set('token', data.access_token, {expires: new Date(new Date().getTime() + data.expires_in * 1000)})
+    token.remove()
+    token.set(data.access_token, data.expires_in)
   },
   bet ({commit, state}, data) {
     commit(types.SET_WAITING_ON_BET_RESULT, true)
@@ -174,7 +173,7 @@ const actions = {
         commit(types.SET_SEED, data)
       }
       commit(types.SET_BETS, data.Bets)
-    }).catch(catchErr)
+    }).catch(showError)
   },
   setupNotifications ({commit}) {
     const hubConnection = $.hubConnection(Settings.SocketUrl, {useDefaultPath: false})
