@@ -1,9 +1,9 @@
-import Cookies from 'js-cookie'
+import token from './token'
 import Settings from './settings'
 
 const start = ({hubConnection, socketHub}) => {
   hubConnection.url = Settings.SocketUrl
-  hubConnection.qs = {Bearer: Cookies.get('token')}
+  hubConnection.qs = {Bearer: token.get()}
   hubConnection.start({transport: ['serverSentEvents', 'longPolling']}).done(function () {
     socketHub.invoke('joinApp', Settings.AppId)
   })
