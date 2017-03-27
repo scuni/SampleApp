@@ -10,6 +10,7 @@ import hub from './hub'
 import Settings from './settings'
 import {addToBetsList, createBet} from './bets-helpers'
 import {currencies} from './currencies'
+import {catchErr} from './helpers'
 
 Vue.use(Vuex)
 
@@ -122,10 +123,10 @@ const actions = {
     commit(types.SET_CURRENCY, currency)
     api.getBalance(currency).then(function (response) {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency})
-    })
+    }).catch(catchErr)
     api.getStats(currency).then(function (response) {
       commit(types.SET_STATS, {Currency: currency, ...response.data})
-    })
+    }).catch(catchErr)
   },
   showRegisterDialog ({commit}) {
     commit(types.SET_REGISTER_DIALOG, true)
@@ -144,7 +145,7 @@ const actions = {
       commit(types.RESET_USER)
       Cookies.remove('token')
       hub.restart(state.Signalr)
-    })
+    }).catch(catchErr)
   },
   saveClientSeed ({commit}, clientSeed) {
     api.saveClientSeed(clientSeed)
@@ -173,7 +174,7 @@ const actions = {
         commit(types.SET_SEED, data)
       }
       commit(types.SET_BETS, data.Bets)
-    })
+    }).catch(catchErr)
   },
   setupNotifications ({commit}) {
     const hubConnection = $.hubConnection(Settings.SocketUrl, {useDefaultPath: false})
