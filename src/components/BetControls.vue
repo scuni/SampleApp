@@ -126,6 +126,7 @@
   }
 </style>
 <script>
+  import Cookies from 'js-cookie'
   import toastr from 'toastr'
   import {mapGetters} from 'vuex'
   import ProvablyFairModal from '@/components/ProvablyFairModal'
@@ -153,6 +154,10 @@
     }),
     methods: {
       bet: function (target) {
+        if (Cookies.get('token') !== undefined) {
+          toastr.error('You must be login to make a bet')
+          return
+        }
         if (this.BetAmount === 0) {
           toastr.error('You must bet more than 0')
           return
@@ -162,7 +167,7 @@
           toastr.error('Balance too low')
           return
         }
-
+        
         this.$store.dispatch('bet', {Chance: this.Chance, BetAmount: this.BetAmount, Target: target})
       },
       updateTargets: function () {
