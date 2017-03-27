@@ -154,7 +154,7 @@
     }),
     methods: {
       bet: function (target) {
-        if (Cookies.get('token') !== undefined) {
+        if (Cookies.get('token') === undefined) {
           toastr.error('You must be login to make a bet')
           return
         }
