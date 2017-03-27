@@ -18,8 +18,8 @@
             <li><a v-bind:href="LoginUrl">Log in</a></li>
           </template>
           <template v-if="IsAuthenticated === true">
-            <li><a @click.prevent="openDepositWindow">Deposit</a></li>
-            <li><a @click.prevent="openWithdrawWindow">Withdraw</a></li>
+            <li><a @click.prevent="openDepositWindow" href="#">Deposit</a></li>
+            <li><a @click.prevent="openWithdrawWindow" href="#">Withdraw</a></li>
             <li><a v-bind:href="AccountManageUrl">Account: {{ UserName }}</a></li>
             <li><a @click.prevent="logout" href="#">Log off</a></li>
           </template>
