@@ -167,7 +167,7 @@
           toastr.error('Balance too low')
           return
         }
-        
+
         this.$store.dispatch('bet', {Chance: this.Chance, BetAmount: this.BetAmount, Target: target})
       },
       updateTargets: function () {

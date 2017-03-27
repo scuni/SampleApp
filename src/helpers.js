@@ -44,7 +44,7 @@ export const catchErr = (error) => {
   if (error.response) {
     if (error.response.status === 401) {
       toastr.error('You must be logged in')
-    }else{
+    } else {
       toastr.error('An error occured')
     }
   }
