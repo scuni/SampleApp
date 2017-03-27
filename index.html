@@ -10,10 +10,14 @@
 <div id="app"></div>
 <script type="text/javascript">
   window.settings = {
-    AppId: 3,
+    AppId: 1,
     AppName: 'Sample App',
-    AppUrl: 'http://localhost:8080/'
+    AppUrl: 'https://bkp1sa.azurewebsites.net/',
+    AppHost: 'bkp1sa.azurewebsites.net'
   }
+    if (window.location.host == window.settings.AppHost && window.location.protocol != 'https:') { 
+        window.location.protocol = 'https:';
+    }
 </script>
 <!-- built files will be auto injected -->
 </body>
