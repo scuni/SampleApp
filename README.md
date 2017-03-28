@@ -59,3 +59,6 @@ Deploy the dist folder generated after `npm run build` on Github, Heroku or your
 You can submit pull requests for features or bug fixes.
 There's a list of issues marked with the Front-end label which should be able to be implemented without anything else being added to back end.
 You can also submit code for features or fixes not on the issues list if you find something yourself.
+
+Please make sure there are no linting errors in your code befor submitting a pull request.
+Code with lint errors will not be merged.

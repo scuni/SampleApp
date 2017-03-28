@@ -238,19 +238,18 @@
       hideProvablyFairDialog: function () {
         this.$store.dispatch('hideProvablyFairDialog')
       },
-      updateBetAmount: function () {       
-        if(isNaN(parseFloat(this.BetProfit))){
-          this.BetAmount = 0 
-        } else if (this.BetProfit > 0){
-          var p = this.BetProfit / (this.Payout-1)
-            if(p > this.Balance){
-              p = this.Balance
-            }          
+      updateBetAmount: function () {
+        if (isNaN(parseFloat(this.BetProfit))) {
+          this.BetAmount = 0
+        } else if (this.BetProfit > 0) {
+          var p = this.BetProfit / (this.Payout - 1)
+          if (p > this.Balance) {
+            p = this.Balance
+          }
           this.BetAmount = formatDecimal(p, 8)
         } else {
           this.BetAmount = 0
         }
-        this.updateProfit()
       }
     }
   }
