@@ -29,6 +29,7 @@ const state = {
   Bankroll: 0,
   Wagered: 0,
   Profit: 0,
+  UserStats: [],
   // seed data
   ServerSeedHash: '',
   ClientSeed: '',
@@ -66,6 +67,9 @@ const mutations = {
     if (state.Currency === Currency) {
       state.Balance = Balance
     }
+  },
+   [types.SET_USERSTATS] (state, { stats }) {
+    state.UserStats = stats
   },
   [types.SET_STATS] (state, {Currency, NumBets, MaxWin, Bankroll, Wagered, Profit}) {
     if (state.Currency === Currency) {
@@ -175,6 +179,11 @@ const actions = {
       commit(types.SET_BETS, data.Bets)
     }).catch(showError)
   },
+   loadUserStats ({commit, state}) {
+    api.getUserStats(state.UserName).then(function (response) {
+      commit(types.SET_USERSTATS, { stats: response.data })
+    }).catch(showError)
+  },
   setupNotifications ({commit}) {
     const hubConnection = $.hubConnection(Settings.SocketUrl, {useDefaultPath: false})
     const socketHub = hubConnection.createHubProxy('socketHub')
@@ -266,6 +275,7 @@ const getters = {
   Wagered: state => state.Wagered,
   Profit: state => state.Profit,
   UserName: state => state.UserName,
+  UserStats: state => state.UserStats,
   IsAuthenticated: state => state.IsAuthenticated,
   RegisterDialogVisible: state => state.RegisterDialogVisible,
   ServerSeedHash: state => state.ServerSeedHash,

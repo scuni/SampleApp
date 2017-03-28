@@ -39,6 +39,9 @@ export default {
   getStats (currency) {
     return axios.get(`${Settings.ApiBase}api/stats/getstats?currency=${currency}&appId=${Settings.AppId}`)
   },
+  getUserStats (userName) {
+    return axios.get(`${Settings.ApiBase}api/stats/getuserstats?appId=${Settings.AppId}&userName=${userName}`)
+  },
   loadState (currency, clientSeed) {
     return axios.get(`${Settings.ApiBase}api/app/loadstate?currency=${currency}&appId=${Settings.AppId}&clientSeed=${clientSeed}`, token.isNotDefined() ? {} : headers())
   }

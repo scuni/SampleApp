@@ -18,21 +18,32 @@
       <br/>
       <div class='row'>
         <div class='col-xs-12'>
-          <ul class='nav nav-tabs'>
-            <li class='active mainTab highRollerButton' v-on:click.prevent='highRollerButtonClicked'>
-              <a href='#'>Highroller</a>
+          <ul id="mainTabs" class='nav nav-tabs' role="tablist">
+           <li role="presentation" class='active mainTab highRollerButton' v-on:click.prevent='highRollerButtonClicked'>
+              <a href='#BetsTab'>Highroller</a>
             </li>
-            <li class='mainTab allBetsButton' v-on:click.prevent='allBetsButtonClicked'>
-              <a href='#'>All Bets</a>
+            <li role="presentation" class='mainTab allBetsButton' v-on:click.prevent='allBetsButtonClicked'>
+              <a href='##BetsTab'>All Bets</a>
             </li>
-            <li class='mainTab myBetsButton' v-on:click.prevent='myBetsButtonClicked'>
-              <a href='#'>My Bets</a>
+            <li role="presentation" class='mainTab myBetsButton' v-on:click.prevent='myBetsButtonClicked'>
+              <a href='##BetsTab'>My Bets</a>
             </li>
-            <li class='mainTab'><a href='#'>Chat</a></li>
-            <li class='mainTab'><a href='#'>Stats</a></li>
+            <li role="presentation" class='mainTab'><a href='#ChatTab'>Chat</a></li>
+            <li role="presentation" class='mainTab' v-on:click.prevent='loadUserStats'><a href='#StatsTab'>Stats</a></li>
           </ul>
-          <BetsList v-bind:ActiveBets='ActiveBets'>
-          </BetsList>
+          
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="BetsTab">
+              <BetsList v-bind:ActiveBets='ActiveBets'>
+              </BetsList>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="ChatTab">Coming soon</div>
+            <div role="tabpanel" class="tab-pane" id="StatsTab">
+              <UserStats>
+              </UserStats>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -176,6 +187,7 @@
   import BetsList from '@/components/BetsList'
   import RegisterDialog from '@/components/RegisterDialog'
   import StatsBar from '@/components/StatsBar'
+  import UserStats from '@/components/UserStats'
   import NavBar from '@/components/NavBar'
   import BetControls from '@/components/BetControls'
   import { getRandomString, setInputNumeric } from './helpers'
@@ -197,6 +209,7 @@
       BetsList,
       RegisterDialog,
       StatsBar,
+      UserStats,
       NavBar,
       BetControls
     },
@@ -222,6 +235,11 @@
       $('#betAmount, #chance, #payout').keypress(function (event) {
         setInputNumeric(event, $(this).val())
       })
+
+      $('#mainTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      })
     },
     methods: {
       getHashParams () {
@@ -241,6 +259,9 @@
       },
       loadState (clientSeed) {
         this.$store.dispatch('loadState', clientSeed)
+      },
+      loadUserStats () {
+        this.$store.dispatch('loadUserStats')
       },
       setupSignalR () {
         this.$store.dispatch('setupNotifications')
