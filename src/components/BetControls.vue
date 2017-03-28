@@ -156,7 +156,7 @@
     methods: {
       bet: function (target) {
         if (token.isNotDefined()) {
-          toastr.error('You must be login to make a bet')
+          toastr.error('You must login to make a bet')
           return
         }
         if (this.BetAmount === 0) {
