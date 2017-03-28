@@ -1,5 +1,5 @@
 <template>
-  <ul class="row statsList">
+  <ul class="row statsList list-unstyled">
     <li v-for="currency in Currencies">
       <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 statBackground">
         <div class="col-xs-offset-1 col-xs-1 currencyContainer">
