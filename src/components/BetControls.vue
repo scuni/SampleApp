@@ -70,6 +70,14 @@
             </ProvablyFairModal>
           </div>
         </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button v-on:click="halvedBetAmount" class="btn btn-default" type="button">1/2</button>
+            <button v-on:click="doubleBetAmount" class="btn btn-default" type="button">x2</button>
+            <button v-on:click="minBetAmount" class="btn btn-default" type="button">min</button>
+            <button v-on:click="maxBetAmount" class="btn btn-default" type="button">max</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -108,6 +116,12 @@
     color: #fff;
   }
 
+  .btn-default:focus {
+    color: #FBFCFE;
+    background-color: #303E46;
+    border-color: #303E46;
+  }
+
   .target {
     font-size: 9px;
     float: right;
@@ -130,8 +144,9 @@
   import {mapGetters} from 'vuex'
   import ProvablyFairModal from '@/components/ProvablyFairModal'
   import CurrencyIcon from '@/components/CurrencyIcon'
-  import {formatDecimal} from './../helpers'
-  import token from './../token'
+  import {formatDecimal} from '../helpers'
+  import token from '../token'
+  import settings from '../settings'
 
   export default {
     name: 'BetControls',
@@ -154,7 +169,7 @@
       ProvablyFairDialogVisible: 'ProvablyFairDialogVisible'
     }),
     methods: {
-      bet: function (target) {
+      bet (target) {
         if (token.isNotDefined()) {
           toastr.error('You must login to make a bet')
           return
@@ -171,7 +186,7 @@
 
         this.$store.dispatch('bet', {Chance: this.Chance, BetAmount: this.BetAmount, Target: target})
       },
-      updateTargets: function () {
+      updateTargets () {
         var c = this.Chance
 
         if (isNaN(c) || c === '') {
@@ -181,8 +196,8 @@
         this.HiTarget = '> ' + (99.9999 - c).toFixed(4)
         this.LoTarget = '< ' + parseFloat(c).toFixed(4)
       },
-      updateChance: function () {
-        var fc = (this.Chance)
+      updateChance () {
+        let fc = this.Chance
         if (isNaN(fc) || fc === '' || fc === 0) {
           this.Payout = 0
         } else {
@@ -193,36 +208,30 @@
             fc = 98.99
           }
 
-          var m = 99 / fc
-          m = formatDecimal(m, 8)
-
-          this.Payout = m
+          this.Payout = formatDecimal(99 / fc, 8)
           this.Chance = fc
         }
 
         this.updateProfit()
         this.updateTargets()
       },
-      updatePayout: function () {
-        var fp = this.Payout
+      updatePayout () {
+        let fp = this.Payout
         if (isNaN(fp) || fp === '' || fp === 0) {
           this.Chance = 0
         } else {
           if (fp > 990000) {
             fp = 990000
           }
-          var c = 99 / fp
 
-          c = formatDecimal(c, 4)
-
-          this.Chance = c
+          this.Chance = formatDecimal(99 / fp, 4)
           this.Payout = fp
         }
 
         this.updateProfit()
         this.updateTargets()
       },
-      updateProfit: function () {
+      updateProfit () {
         if (isNaN(parseFloat(this.BetAmount))) {
           this.BetProfit = 0
         } else if (this.Payout > 0) {
@@ -232,17 +241,17 @@
           this.BetProfit = 0
         }
       },
-      showProvablyFairDialog: function () {
+      showProvablyFairDialog () {
         this.$store.dispatch('showProvablyFairDialog')
       },
-      hideProvablyFairDialog: function () {
+      hideProvablyFairDialog () {
         this.$store.dispatch('hideProvablyFairDialog')
       },
-      updateBetAmount: function () {
+      updateBetAmount () {
         if (isNaN(parseFloat(this.BetProfit))) {
           this.BetAmount = 0
         } else if (this.BetProfit > 0) {
-          var p = this.BetProfit / (this.Payout - 1)
+          let p = this.BetProfit / (this.Payout - 1)
           if (p > this.Balance) {
             p = this.Balance
           }
@@ -250,6 +259,26 @@
         } else {
           this.BetAmount = 0
         }
+      },
+      halvedBetAmount (e) {
+        let betAmount = this.BetAmount / 2
+        if (betAmount < settings.MinBetAmount) {
+          betAmount = settings.MinBetAmount
+        }
+        this.BetAmount = formatDecimal(betAmount, 8)
+        this.updateProfit()
+      },
+      doubleBetAmount () {
+        this.BetAmount = formatDecimal(this.BetAmount * 2, 8)
+        this.updateProfit()
+      },
+      minBetAmount () {
+        this.BetAmount = formatDecimal(settings.MinBetAmount, 8)
+        this.updateProfit()
+      },
+      maxBetAmount () {
+        this.BetAmount = this.Balance
+        this.updateProfit()
       }
     }
   }

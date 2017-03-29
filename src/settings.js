@@ -13,5 +13,6 @@ export default {
   BetKingUrlBase: 'http://bkp1.azurewebsites.net/',
   RegisterUrl: 'account/register',
   LoginUrl: 'account/login',
-  AccountManageUrl: 'manage/index'
+  AccountManageUrl: 'manage/index',
+  MinBetAmount: 0.00000001
 }
