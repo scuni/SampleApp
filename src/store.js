@@ -11,6 +11,7 @@ import {addToBetsList, createBet} from './bets-helpers'
 import {currencies} from './currencies'
 import {showError} from './helpers'
 import token from './token'
+import {bus} from './bus'
 
 Vue.use(Vuex)
 
@@ -164,7 +165,9 @@ const actions = {
   },
   bet ({commit, state}, data) {
     commit(types.SET_WAITING_ON_BET_RESULT, true)
-    api.bet(data.Chance, data.BetAmount, data.Target, state.Currency)
+    api.bet(data.Chance, data.BetAmount, data.Target, state.Currency).then(() => {
+      bus.$emit('new-bet')
+    })
   },
   loadState ({commit, state}, clientSeed) {
     api.loadState(state.Currency, clientSeed).then(function (response) {

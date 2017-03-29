@@ -23,15 +23,15 @@
               <a href='#BetsTab'>Highroller</a>
             </li>
             <li role="presentation" class='mainTab allBetsButton' v-on:click.prevent='allBetsButtonClicked'>
-              <a href='##BetsTab'>All Bets</a>
+              <a href='#BetsTab'>All Bets</a>
             </li>
             <li role="presentation" class='mainTab myBetsButton' v-on:click.prevent='myBetsButtonClicked'>
-              <a href='##BetsTab'>My Bets</a>
+              <a href='#BetsTab'>My Bets</a>
             </li>
             <li role="presentation" class='mainTab'><a href='#ChatTab'>Chat</a></li>
             <li role="presentation" class='mainTab' v-on:click.prevent='loadUserStats'><a href='#StatsTab'>Stats</a></li>
           </ul>
-          
+
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="BetsTab">
               <BetsList v-bind:ActiveBets='ActiveBets'>
@@ -192,6 +192,7 @@
   import BetControls from '@/components/BetControls'
   import { getRandomString, setInputNumeric } from './helpers'
   import settings from './settings'
+  import {bus} from './bus'
 
   export default {
     name: 'app',
@@ -240,6 +241,8 @@
         e.preventDefault()
         $(this).tab('show')
       })
+
+      bus.$on('new-bet', this.myBetsButtonClicked)
     },
     methods: {
       getHashParams () {
