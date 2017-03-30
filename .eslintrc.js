@@ -33,6 +33,26 @@ module.exports = {
     'quotes': 1,
     'quote-props': 0,
     'no-array-constructor': 1,
-    'array-callback-return': 1
+    'array-callback-return': 1,
+    'no-useless-escape': 1,
+    'func-style': 1,
+    'no-loop-func': 1,
+    'prefer-rest-params': 1,
+    'no-new-func': 1,
+    'space-before-function-paren': 1,
+    'no-param-reassign': 1,
+    'prefer-spread': 1,
+    'no-confusing-arrow': 1,
+    'no-useless-constructor': 1,
+    'no-dupe-class-members': 1,
+    'no-duplicate-imports': 1,
+    'no-restricted-syntax': 1,
+    'dot-notation': 1,
+    'no-undef': 1,
+    'one-var': 1,
+    //'no-plusplus': 1
+    'eqeqeq': 1,
+    'no-case-declarations': 1,
+    'no-nested-ternary': 1
   }
 }
