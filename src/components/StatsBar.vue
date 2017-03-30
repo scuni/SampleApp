@@ -80,7 +80,7 @@
       Profit: 'Profit'
     }),
     methods: {
-      onCurrencyChange: function (c) {
+      onCurrencyChange (c) {
         this.$store.dispatch('changeCurrency', c)
       }
     }

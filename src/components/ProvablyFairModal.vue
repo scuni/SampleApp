@@ -242,7 +242,7 @@
 
   export default {
     name: 'ProvablyFairModal',
-    data: function () {
+    data: () => {
       return {
         EditClientSeedDisabled: true,
         EditClientSeedText: 'Edit'
@@ -258,7 +258,7 @@
       PreviousNonce: 'PreviousNonce'
     }),
     methods: {
-      editClientSeed: function () {
+      editClientSeed () {
         this.EditClientSeedDisabled = !this.EditClientSeedDisabled
         if (this.EditClientSeedDisabled === true) {
           this.EditClientSeedText = 'Edit'
@@ -267,7 +267,7 @@
           this.EditClientSeedText = 'Save'
         }
       },
-      generateNewSeed: function () {
+      generateNewSeed () {
         this.$store.dispatch('generateNewServerSeed', this.ClientSeed)
       }
     }

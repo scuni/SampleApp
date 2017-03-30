@@ -97,7 +97,7 @@
       CurrencyIcon
     },
     methods: {
-      formatProfit: function (x) {
+      formatProfit (x) {
         return (x < 0) ? 'red-text' : 'green-text'
       }
     }

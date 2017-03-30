@@ -58,10 +58,10 @@
       IsAuthenticated: 'IsAuthenticated'
     }),
     methods: {
-      showRegisterDialog: function () {
+      showRegisterDialog () {
         this.$store.dispatch('showRegisterDialog')
       },
-      openDepositWindow: function () {
+      openDepositWindow () {
         const url = Settings.BetKingUrlBase + 'apps/deposit?appId=' + Settings.AppId
         const name = 'App Deposit'
         const options = [
@@ -73,7 +73,7 @@
         const w = window.open(url, name, options)
         w.focus()
       },
-      openWithdrawWindow: function () {
+      openWithdrawWindow () {
         const url = Settings.BetKingUrlBase + 'apps/withdraw?appId=' + Settings.AppId
         const name = 'App Withdraw'
         const options = [
@@ -85,7 +85,7 @@
         const w = window.open(url, name, options)
         w.focus()
       },
-      logout: function () {
+      logout () {
         this.$store.dispatch('logout')
       }
     }

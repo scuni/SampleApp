@@ -48,7 +48,7 @@
 
   export default {
     name: 'RegisterDialog',
-    data: function () {
+    data: () => {
       return {
         RegisterUrl: Settings.BetKingUrlBase + Settings.RegisterUrl + '?appId=' + Settings.AppId
       }

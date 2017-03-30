@@ -9,10 +9,10 @@ export default {
   bet (chance, betAmount, target, currency) {
     return axios.post(`${Settings.ApiBase}api/dice/bet`, {
       appId: Settings.AppId,
-      chance: chance,
-      betAmount: betAmount,
-      target: target,
-      currency: currency
+      chance,
+      betAmount,
+      target,
+      currency
     }, headers()).catch(showError)
   },
   logout () {
@@ -27,13 +27,13 @@ export default {
   saveClientSeed (clientSeed) {
     return axios.post(`${Settings.ApiBase}api/dice/saveClientSeed`, {
       appId: Settings.AppId,
-      clientSeed: clientSeed
+      clientSeed
     }, headers()).catch(showError)
   },
   generateNewServerSeed (clientSeed) {
     return axios.post(`${Settings.ApiBase}api/dice/generateNewServerSeed`, {
       appId: Settings.AppId,
-      clientSeed: clientSeed
+      clientSeed
     }, headers()).catch(showError)
   },
   getStats (currency) {
