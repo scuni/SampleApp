@@ -29,6 +29,7 @@
         if (this.CurrencySymbol) {
           return currencies.find(currency => currency.symbol === this.CurrencySymbol).icon;
         }
+        
         return currencies[this.Currency].icon;
       }
     }

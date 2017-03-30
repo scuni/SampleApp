@@ -20,6 +20,7 @@ export const createBet = (item) => {
 export const addToBetsList = (bet, list) => {
   if (list.length > 0) {
     list.splice(0, 0, bet);
+    
     if (list.length > 50) {
       list.splice(-1, 1);
     }

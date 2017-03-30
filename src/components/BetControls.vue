@@ -204,12 +204,14 @@
       },
       updateChance () {
         let fc = this.Chance;
+
         if (isNaN(fc) || fc === '' || fc === 0) {
           this.Payout = 0;
         } else {
           if (fc < 0.0001) {
             fc = 0.0001;
           }
+
           if (fc > 98.99) {
             fc = 98.99;
           }
@@ -223,6 +225,7 @@
       },
       updatePayout () {
         let fp = this.Payout;
+
         if (isNaN(fp) || fp === '' || fp === 0) {
           this.Chance = 0;
         } else {
@@ -242,6 +245,7 @@
           this.BetProfit = 0;
         } else if (this.Payout > 0) {
           const p = this.BetAmount * this.Payout - this.BetAmount;
+          
           this.BetProfit = formatDecimal(p, 8);
         } else {
           this.BetProfit = 0;
@@ -258,9 +262,11 @@
           this.BetAmount = 0;
         } else if (this.BetProfit > 0) {
           let p = this.BetProfit / (this.Payout - 1);
+          
           if (p > this.Balance) {
             p = this.Balance;
           }
+          
           this.BetAmount = formatDecimal(p, 8);
         } else {
           this.BetAmount = 0;
@@ -268,17 +274,21 @@
       },
       halvedBetAmount (e) {
         let betAmount = this.BetAmount / 2;
+        
         if (betAmount < settings.MinBetAmount) {
           betAmount = settings.MinBetAmount;
         }
+        
         this.BetAmount = formatDecimal(betAmount, 8);
         this.updateProfit();
       },
       doubleBetAmount () {
         this.BetAmount = formatDecimal(this.BetAmount * 2, 8);
+        
         if (this.BetAmount > this.Balance) {
           this.BetAmount = this.Balance;
         }
+        
         this.updateProfit();
       },
       minBetAmount () {

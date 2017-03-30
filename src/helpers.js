@@ -34,6 +34,7 @@ export const formatDecimal = (x, n) => {
 export const setInputNumeric = (event, inputText) => {
   const controlKeys = [8, 9, 13];
   const isControlKey = controlKeys.join(',').match(new RegExp(event.which));
+  
   if (!(!event.which ||
     (event.which >= 48 && event.which <= 57) ||
     isControlKey ||

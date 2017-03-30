@@ -71,6 +71,7 @@
           'top=50'
         ];
         const w = window.open(url, name, options);
+
         w.focus();
       },
       openWithdrawWindow () {
@@ -83,6 +84,7 @@
           'top=50'
         ];
         const w = window.open(url, name, options);
+        
         w.focus();
       },
       logout () {

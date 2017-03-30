@@ -216,6 +216,7 @@
     },
     mounted () {
       document.title = settings.AppName;
+      
       if (this.getHashParams().access_token) {
         this.$store.dispatch('login', {
           access_token: this.getHashParams().access_token,
@@ -254,10 +255,12 @@
           return decodeURIComponent(s.replace(a, ' '));
         };
         const q = window.location.hash.substring(1);
+
 // eslint-disable-next-line no-cond-assign
         while (e = r.exec(q)) {
           hashParams[d(e[1])] = d(e[2]);
         }
+
         return hashParams;
       },
       loadState (clientSeed) {

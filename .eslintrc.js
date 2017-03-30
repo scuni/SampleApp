@@ -65,6 +65,9 @@ module.exports = {
     //allows claner diffs
     'comma-dangle': 0,
     'radix': 1,
-    'semi': ['warn', 'always']
+    'semi': ['warn', 'always'],
+    'camelcase': 1,
+    'new-cap': 1,
+    'no-underscore-dangle': 1
   }
 }

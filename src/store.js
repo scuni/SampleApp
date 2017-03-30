@@ -126,10 +126,12 @@ const mutations = {
 const actions = {
   changeCurrency ({commit}, currency) {
     commit(types.SET_CURRENCY, currency);
+
     api.getBalance(currency).then(function (response) {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency});
     })
     .catch(showError);
+    
     api.getStats(currency).then(function (response) {
       commit(types.SET_STATS, {Currency: currency, ...response.data});
     })
@@ -175,6 +177,7 @@ const actions = {
   loadState ({commit, state}, clientSeed) {
     api.loadState(state.Currency, clientSeed).then(function (response) {
       const data = response.data;
+
       commit(types.SET_STATS, {Currency: state.Currency, ...data});
 
       if (data.UserName !== '') {
@@ -182,6 +185,7 @@ const actions = {
         commit(types.SET_BALANCE, {Balance: data.Balance, Currency: state.Currency});
         commit(types.SET_SEED, data);
       }
+      
       commit(types.SET_BETS, data.Bets);
     })
     .catch(showError);
@@ -195,6 +199,7 @@ const actions = {
   setupNotifications ({commit}) {
     const hubConnection = $.hubConnection(Settings.SocketUrl, {useDefaultPath: false});
     const socketHub = hubConnection.createHubProxy('socketHub');
+
     commit(types.SET_SIGNALR, {hubConnection, socketHub});
 
     hubConnection.error(function (error) {

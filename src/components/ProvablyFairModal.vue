@@ -260,6 +260,7 @@
     methods: {
       editClientSeed () {
         this.EditClientSeedDisabled = !this.EditClientSeedDisabled;
+        
         if (this.EditClientSeedDisabled === true) {
           this.EditClientSeedText = 'Edit';
           this.$store.dispatch('saveClientSeed', this.ClientSeed);

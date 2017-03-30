@@ -61,16 +61,20 @@ export default {
   methods: {
     getBets (currency) {
       const x = this.findElement(this.UserStats, 'Currency', currency);
+
       if (x === undefined) {
         return 0;
       }
+
       return x.NumBets;
     },
     getProfit (currency) {
       const x = this.findElement(this.UserStats, 'Currency', currency);
+
       if (x === undefined) {
         return 0;
       }
+
       return x.Profit;
     },
     getWagered (currency) {
@@ -78,6 +82,7 @@ export default {
       if (x === undefined) {
         return 0;
       }
+      
       return x.Wagered;
     },
     findElement (arr, propName, propValue) {
