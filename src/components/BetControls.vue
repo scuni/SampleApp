@@ -270,6 +270,9 @@
       },
       doubleBetAmount () {
         this.BetAmount = formatDecimal(this.BetAmount * 2, 8)
+        if (this.BetAmount > this.Balance) {
+          this.BetAmount = this.Balance
+        }
         this.updateProfit()
       },
       minBetAmount () {
