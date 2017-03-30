@@ -50,7 +50,7 @@
     name: 'RegisterDialog',
     data: () => {
       return {
-        RegisterUrl: Settings.BetKingUrlBase + Settings.RegisterUrl + '?appId=' + Settings.AppId
+        RegisterUrl: `${Settings.BetKingUrlBase}${Settings.RegisterUrl}?appId=${Settings.AppId}`
       }
     },
     computed: mapGetters({

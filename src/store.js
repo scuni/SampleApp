@@ -193,7 +193,7 @@ const actions = {
     commit(types.SET_SIGNALR, {hubConnection, socketHub})
 
     hubConnection.error(function (error) {
-      console.log('SignalR error: ' + error)
+      console.log(`SignalR error: ${error}`)
     })
 
     socketHub.on('showInfo', (message) => {
@@ -246,7 +246,7 @@ const actions = {
     socketHub.on('newDeposit', (balance, amount, currency, appId) => {
       if (Settings.AppId === appId) {
         commit(types.SET_BALANCE, {Balance: balance, Currency: currency})
-        toastr.info('New deposit of ' + amount + ' ' + currencies[currency].code + ' received')
+        toastr.info(`New deposit of ${amount} ${currencies[currency].code} received`)
       }
     })
 

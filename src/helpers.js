@@ -7,9 +7,9 @@ export const formatCurrency = (c) => {
 
 export const formatTarget = (chance, target) => {
   if (target === 0) {
-    return '> ' + (99.9999 - chance).toFixed(4)
+    return `> ${(99.9999 - chance).toFixed(4)}`
   } else {
-    return '< ' + chance.toFixed(4)
+    return `< ${chance.toFixed(4)}`
   }
 }
 

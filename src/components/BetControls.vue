@@ -181,7 +181,7 @@
         }
 
         if (this.BetAmount < settings.MinBetAmount) {
-          toastr.error('You must bet more than ' + settings.MinBetAmount)
+          toastr.error(`You must bet more than ${settings.MinBetAmount}`)
           return
         }
 
@@ -199,8 +199,8 @@
           c = 0.0001
         }
 
-        this.HiTarget = '> ' + (99.9999 - c).toFixed(4)
-        this.LoTarget = '< ' + parseFloat(c).toFixed(4)
+        this.HiTarget = `> ${(99.9999 - c).toFixed(4)}`
+        this.LoTarget = `< ${parseFloat(c).toFixed(4)}`
       },
       updateChance () {
         let fc = this.Chance

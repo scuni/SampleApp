@@ -26,6 +26,13 @@ module.exports = {
     'object-shorthand': 1,
     'prefer-const': 1,
     'no-const-assign': 1,
-    'no-var': 1
+    'no-var': 1,
+    'no-new-object': 1,
+    'prefer-template': 1,
+    'template-curly-spacing': 1,
+    'quotes': 1,
+    'quote-props': 0,
+    'no-array-constructor': 1,
+    'array-callback-return': 1
   }
 }
