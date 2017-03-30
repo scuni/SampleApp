@@ -68,6 +68,8 @@ module.exports = {
     'semi': ['warn', 'always'],
     'camelcase': 1,
     'new-cap': 1,
-    'no-underscore-dangle': 1
+    'no-underscore-dangle': 1,
+    //doesn't work as intended
+    'no-trailing-spaces': 0
   }
 }
