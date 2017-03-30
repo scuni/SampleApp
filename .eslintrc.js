@@ -53,6 +53,10 @@ module.exports = {
     //'no-plusplus': 1
     'eqeqeq': 1,
     'no-case-declarations': 1,
-    'no-nested-ternary': 1
+    'no-nested-ternary': 1,
+    'no-unneeded-ternary': 1,
+    'brace-style': 1,
+    'newline-per-chained-call': 1,
+    'no-whitespace-before-property': 1
   }
 }

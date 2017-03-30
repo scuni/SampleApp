@@ -24,7 +24,9 @@ export const getRandomString = (n) => {
 }
 
 export const formatDecimal = (x, n) => {
-  return Math.floor(x * Math.pow(10, n) + 1e-6) / Math.pow(10, n).toFixed(n).replace(/([.].*?)0+$/, '$1').replace(/[.]$/, '')
+  return Math.floor(x * Math.pow(10, n) + 1e-6) / Math.pow(10, n).toFixed(n)
+  .replace(/([.].*?)0+$/, '$1')
+  .replace(/[.]$/, '')
 }
 
 export const setInputNumeric = (event, inputText) => {

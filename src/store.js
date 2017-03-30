@@ -128,10 +128,12 @@ const actions = {
     commit(types.SET_CURRENCY, currency)
     api.getBalance(currency).then(function (response) {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency})
-    }).catch(showError)
+    })
+    .catch(showError)
     api.getStats(currency).then(function (response) {
       commit(types.SET_STATS, {Currency: currency, ...response.data})
-    }).catch(showError)
+    })
+    .catch(showError)
   },
   showRegisterDialog ({commit}) {
     commit(types.SET_REGISTER_DIALOG, true)
@@ -150,7 +152,8 @@ const actions = {
       commit(types.RESET_USER)
       token.remove()
       hub.restart(state.Signalr)
-    }).catch(showError)
+    })
+    .catch(showError)
   },
   saveClientSeed ({commit}, clientSeed) {
     api.saveClientSeed(clientSeed)
@@ -180,12 +183,14 @@ const actions = {
         commit(types.SET_SEED, data)
       }
       commit(types.SET_BETS, data.Bets)
-    }).catch(showError)
+    })
+    .catch(showError)
   },
   loadUserStats ({commit, state}) {
     api.getUserStats(state.UserName).then(function (response) {
       commit(types.SET_USERSTATS, { stats: response.data })
-    }).catch(showError)
+    })
+    .catch(showError)
   },
   setupNotifications ({commit}) {
     const hubConnection = $.hubConnection(Settings.SocketUrl, {useDefaultPath: false})
