@@ -58,9 +58,9 @@
 </style>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import {currencies} from '../currencies'
-  import CurrencyIcon from '@/components/CurrencyIcon'
+  import {mapGetters} from 'vuex';
+  import {currencies} from '../currencies';
+  import CurrencyIcon from '@/components/CurrencyIcon';
 
   export default {
     name: 'StatsBar',
@@ -81,8 +81,8 @@
     }),
     methods: {
       onCurrencyChange (c) {
-        this.$store.dispatch('changeCurrency', c)
+        this.$store.dispatch('changeCurrency', c);
       }
     }
-  }
+  };
 </script>

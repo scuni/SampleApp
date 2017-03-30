@@ -9,7 +9,7 @@
 </style>
 
 <script>
-  import {currencies} from '../currencies'
+  import {currencies} from '../currencies';
 
   export default {
     name: 'CurrencyIcon',
@@ -27,10 +27,10 @@
     computed: {
       Url () {
         if (this.CurrencySymbol) {
-          return currencies.find(currency => currency.symbol === this.CurrencySymbol).icon
+          return currencies.find(currency => currency.symbol === this.CurrencySymbol).icon;
         }
-        return currencies[this.Currency].icon
+        return currencies[this.Currency].icon;
       }
     }
-  }
+  };
 </script>

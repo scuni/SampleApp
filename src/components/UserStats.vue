@@ -43,9 +43,9 @@
 </style>
 
 <script>
-import {mapGetters} from 'vuex'
-import {currencies} from '../currencies'
-import CurrencyIcon from '@/components/CurrencyIcon'
+import {mapGetters} from 'vuex';
+import {currencies} from '../currencies';
+import CurrencyIcon from '@/components/CurrencyIcon';
 
 export default {
   name: 'UserStats',
@@ -60,33 +60,33 @@ export default {
   },
   methods: {
     getBets (currency) {
-      const x = this.findElement(this.UserStats, 'Currency', currency)
+      const x = this.findElement(this.UserStats, 'Currency', currency);
       if (x === undefined) {
-        return 0
+        return 0;
       }
-      return x.NumBets
+      return x.NumBets;
     },
     getProfit (currency) {
-      const x = this.findElement(this.UserStats, 'Currency', currency)
+      const x = this.findElement(this.UserStats, 'Currency', currency);
       if (x === undefined) {
-        return 0
+        return 0;
       }
-      return x.Profit
+      return x.Profit;
     },
     getWagered (currency) {
-      const x = this.findElement(this.UserStats, 'Currency', currency)
+      const x = this.findElement(this.UserStats, 'Currency', currency);
       if (x === undefined) {
-        return 0
+        return 0;
       }
-      return x.Wagered
+      return x.Wagered;
     },
     findElement (arr, propName, propValue) {
       for (let i = 0; i < arr.length; i++) {
         if (arr[i][propName] === propValue) {
-          return arr[i]
+          return arr[i];
         }
       }
     }
   }
-}
+};
 </script>

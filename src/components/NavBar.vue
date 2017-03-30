@@ -41,8 +41,8 @@
 </style>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import Settings from './../settings'
+  import {mapGetters} from 'vuex';
+  import Settings from './../settings';
 
   export default {
     name: 'NavBar',
@@ -50,7 +50,7 @@
       return {
         LoginUrl: `${Settings.BetKingUrlBase}${Settings.LoginUrl}?appId=${Settings.AppId}`,
         AccountManageUrl: Settings.BetKingUrlBase + Settings.AccountManageUrl
-      }
+      };
     },
     computed: mapGetters({
       AppName: 'AppName',
@@ -59,35 +59,35 @@
     }),
     methods: {
       showRegisterDialog () {
-        this.$store.dispatch('showRegisterDialog')
+        this.$store.dispatch('showRegisterDialog');
       },
       openDepositWindow () {
-        const url = `${Settings.BetKingUrlBase}apps/deposit?appId=${Settings.AppId}`
-        const name = 'App Deposit'
+        const url = `${Settings.BetKingUrlBase}apps/deposit?appId=${Settings.AppId}`;
+        const name = 'App Deposit';
         const options = [
           'width=500',
           'height=400',
           'left=50',
           'top=50'
-        ]
-        const w = window.open(url, name, options)
-        w.focus()
+        ];
+        const w = window.open(url, name, options);
+        w.focus();
       },
       openWithdrawWindow () {
-        const url = `${Settings.BetKingUrlBase}apps/withdraw?appId=${Settings.AppId}`
-        const name = 'App Withdraw'
+        const url = `${Settings.BetKingUrlBase}apps/withdraw?appId=${Settings.AppId}`;
+        const name = 'App Withdraw';
         const options = [
           'width=500',
           'height=400',
           'left=50',
           'top=50'
-        ]
-        const w = window.open(url, name, options)
-        w.focus()
+        ];
+        const w = window.open(url, name, options);
+        w.focus();
       },
       logout () {
-        this.$store.dispatch('logout')
+        this.$store.dispatch('logout');
       }
     }
-  }
+  };
 </script>

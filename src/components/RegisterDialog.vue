@@ -43,18 +43,18 @@
 </style>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import Settings from './../settings'
+  import {mapGetters} from 'vuex';
+  import Settings from './../settings';
 
   export default {
     name: 'RegisterDialog',
     data: () => {
       return {
         RegisterUrl: `${Settings.BetKingUrlBase}${Settings.RegisterUrl}?appId=${Settings.AppId}`
-      }
+      };
     },
     computed: mapGetters({
       AppName: 'AppName'
     })
-  }
+  };
 </script>

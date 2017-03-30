@@ -180,19 +180,19 @@
 </style>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import $ from 'jquery'
+  import {mapGetters} from 'vuex';
+  import $ from 'jquery';
 // eslint-disable-next-line no-unused-vars
-  import bootstrap from 'bootstrap'
-  import BetsList from '@/components/BetsList'
-  import RegisterDialog from '@/components/RegisterDialog'
-  import StatsBar from '@/components/StatsBar'
-  import UserStats from '@/components/UserStats'
-  import NavBar from '@/components/NavBar'
-  import BetControls from '@/components/BetControls'
-  import {getRandomString, setInputNumeric} from './helpers'
-  import settings from './settings'
-  import {bus} from './bus'
+  import bootstrap from 'bootstrap';
+  import BetsList from '@/components/BetsList';
+  import RegisterDialog from '@/components/RegisterDialog';
+  import StatsBar from '@/components/StatsBar';
+  import UserStats from '@/components/UserStats';
+  import NavBar from '@/components/NavBar';
+  import BetControls from '@/components/BetControls';
+  import {getRandomString, setInputNumeric} from './helpers';
+  import settings from './settings';
+  import {bus} from './bus';
 
   export default {
     name: 'app',
@@ -215,7 +215,7 @@
       BetControls,
     },
     mounted () {
-      document.title = settings.AppName
+      document.title = settings.AppName;
       if (this.getHashParams().access_token) {
         this.$store.dispatch('login', {
           access_token: this.getHashParams().access_token,
@@ -224,70 +224,69 @@
       }
 
       if (window.history && window.history.replaceState) {
-        window.history.replaceState({}, document.title, '/')
+        window.history.replaceState({}, document.title, '/');
       } else {
-        window.location.hash = '#'
+        window.location.hash = '#';
       }
 
-      this.loadState(getRandomString(20))
-      this.ActiveBets = this.HighrollerBets
-      this.setupSignalR()
+      this.loadState(getRandomString(20));
+      this.ActiveBets = this.HighrollerBets;
+      this.setupSignalR();
 
       $('#betAmount, #chance, #payout').keypress(function (event) {
-        setInputNumeric(event, $(this).val())
-      })
+        setInputNumeric(event, $(this).val());
+      });
 
       $('#mainTabs a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-      })
+        e.preventDefault();
+        $(this).tab('show');
+      });
 
-      bus.$on('new-bet', this.myBetsButtonClicked)
+      bus.$on('new-bet', this.myBetsButtonClicked);
     },
     methods: {
       getHashParams () {
-        const hashParams = {}
-        let e
-        const a = /\+/g
-        const r = /([^&;=]+)=?([^&;]*)/g
+        const hashParams = {};
+        let e;
+        const a = /\+/g;
+        const r = /([^&;=]+)=?([^&;]*)/g;
         const d = (s) => {
-          return decodeURIComponent(s.replace(a, ' '))
-        }
-        const q = window.location.hash.substring(1)
+          return decodeURIComponent(s.replace(a, ' '));
+        };
+        const q = window.location.hash.substring(1);
 // eslint-disable-next-line no-cond-assign
         while (e = r.exec(q)) {
-          hashParams[d(e[1])] = d(e[2])
+          hashParams[d(e[1])] = d(e[2]);
         }
-        return hashParams
+        return hashParams;
       },
       loadState (clientSeed) {
-        this.$store.dispatch('loadState', clientSeed)
+        this.$store.dispatch('loadState', clientSeed);
       },
       loadUserStats () {
-        this.$store.dispatch('loadUserStats')
+        this.$store.dispatch('loadUserStats');
       },
       setupSignalR () {
-        this.$store.dispatch('setupNotifications')
+        this.$store.dispatch('setupNotifications');
       },
-
       hideRegisterDialog () {
-        this.$store.dispatch('hideRegisterDialog')
+        this.$store.dispatch('hideRegisterDialog');
       },
       highRollerButtonClicked () {
-        $('.mainTab').removeClass('active')
-        $('.highRollerButton').addClass('active')
-        this.ActiveBets = this.HighrollerBets
+        $('.mainTab').removeClass('active');
+        $('.highRollerButton').addClass('active');
+        this.ActiveBets = this.HighrollerBets;
       },
       allBetsButtonClicked () {
-        $('.mainTab').removeClass('active')
-        $('.allBetsButton').addClass('active')
-        this.ActiveBets = this.LatestBets
+        $('.mainTab').removeClass('active');
+        $('.allBetsButton').addClass('active');
+        this.ActiveBets = this.LatestBets;
       },
       myBetsButtonClicked () {
-        $('.mainTab').removeClass('active')
-        $('.myBetsButton').addClass('active')
-        this.ActiveBets = this.UserBets
+        $('.mainTab').removeClass('active');
+        $('.myBetsButton').addClass('active');
+        this.ActiveBets = this.UserBets;
       }
     }
-  }
+  };
 </script>

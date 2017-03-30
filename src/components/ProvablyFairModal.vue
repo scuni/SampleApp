@@ -238,7 +238,7 @@
 </style>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapGetters} from 'vuex';
 
   export default {
     name: 'ProvablyFairModal',
@@ -246,7 +246,7 @@
       return {
         EditClientSeedDisabled: true,
         EditClientSeedText: 'Edit'
-      }
+      };
     },
     computed: mapGetters({
       ServerSeedHash: 'ServerSeedHash',
@@ -259,17 +259,17 @@
     }),
     methods: {
       editClientSeed () {
-        this.EditClientSeedDisabled = !this.EditClientSeedDisabled
+        this.EditClientSeedDisabled = !this.EditClientSeedDisabled;
         if (this.EditClientSeedDisabled === true) {
-          this.EditClientSeedText = 'Edit'
-          this.$store.dispatch('saveClientSeed', this.ClientSeed)
+          this.EditClientSeedText = 'Edit';
+          this.$store.dispatch('saveClientSeed', this.ClientSeed);
         } else {
-          this.EditClientSeedText = 'Save'
+          this.EditClientSeedText = 'Save';
         }
       },
       generateNewSeed () {
-        this.$store.dispatch('generateNewServerSeed', this.ClientSeed)
+        this.$store.dispatch('generateNewServerSeed', this.ClientSeed);
       }
     }
-  }
+  };
 </script>

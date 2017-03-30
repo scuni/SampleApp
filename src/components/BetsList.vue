@@ -83,7 +83,7 @@
 </style>
 
 <script>
-  import CurrencyIcon from '@/components/CurrencyIcon'
+  import CurrencyIcon from '@/components/CurrencyIcon';
 
   export default {
     name: 'BetsList',
@@ -98,8 +98,8 @@
     },
     methods: {
       formatProfit (x) {
-        return (x < 0) ? 'red-text' : 'green-text'
+        return (x < 0) ? 'red-text' : 'green-text';
       }
     }
-  }
+  };
 </script>

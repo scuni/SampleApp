@@ -2,7 +2,7 @@
   AppId: window.settings && window.settings.AppId,
   AppName: window.settings && window.settings.AppName,
   AppUrl: window.settings && window.settings.AppUrl
-}
+};
 
 export default {
   AppId: existingSettings.AppId || 1,
@@ -15,4 +15,4 @@ export default {
   LoginUrl: 'account/login',
   AccountManageUrl: 'manage/index',
   MinBetAmount: 0.00000001
-}
+};
