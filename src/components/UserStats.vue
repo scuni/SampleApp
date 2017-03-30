@@ -60,28 +60,28 @@ export default {
   },
   methods: {
     getBets (currency) {
-      var x = this.findElement(this.UserStats, 'Currency', currency)
+      const x = this.findElement(this.UserStats, 'Currency', currency)
       if (x === undefined) {
         return 0
       }
       return x.NumBets
     },
     getProfit (currency) {
-      var x = this.findElement(this.UserStats, 'Currency', currency)
+      const x = this.findElement(this.UserStats, 'Currency', currency)
       if (x === undefined) {
         return 0
       }
       return x.Profit
     },
     getWagered (currency) {
-      var x = this.findElement(this.UserStats, 'Currency', currency)
+      const x = this.findElement(this.UserStats, 'Currency', currency)
       if (x === undefined) {
         return 0
       }
       return x.Wagered
     },
     findElement (arr, propName, propValue) {
-      for (var i = 0; i < arr.length; i++) {
+      for (let i = 0; i < arr.length; i++) {
         if (arr[i][propName] === propValue) {
           return arr[i]
         }

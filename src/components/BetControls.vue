@@ -193,7 +193,7 @@
         this.$store.dispatch('bet', {Chance: this.Chance, BetAmount: this.BetAmount, Target: target})
       },
       updateTargets () {
-        var c = this.Chance
+        let c = this.Chance
 
         if (isNaN(c) || c === '') {
           c = 0.0001
@@ -241,7 +241,7 @@
         if (isNaN(parseFloat(this.BetAmount))) {
           this.BetProfit = 0
         } else if (this.Payout > 0) {
-          var p = this.BetAmount * this.Payout - this.BetAmount
+          const p = this.BetAmount * this.Payout - this.BetAmount
           this.BetProfit = formatDecimal(p, 8)
         } else {
           this.BetProfit = 0
