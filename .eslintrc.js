@@ -57,6 +57,14 @@ module.exports = {
     'no-unneeded-ternary': 1,
     'brace-style': 1,
     'newline-per-chained-call': 1,
-    'no-whitespace-before-property': 1
+    'no-whitespace-before-property': 1,
+    'padded-blocks': 1,
+    'space-in-parens': 1,
+    'array-bracket-spacing': 1,
+    'object-curly-spacing': 1,
+    //allows claner diffs
+    'comma-dangle': 0,
+    'radix': 1,
+    'semi': ['warn', 'always']
   }
 }

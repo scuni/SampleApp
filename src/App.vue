@@ -180,7 +180,7 @@
 </style>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import {mapGetters} from 'vuex'
   import $ from 'jquery'
 // eslint-disable-next-line no-unused-vars
   import bootstrap from 'bootstrap'
@@ -190,7 +190,7 @@
   import UserStats from '@/components/UserStats'
   import NavBar from '@/components/NavBar'
   import BetControls from '@/components/BetControls'
-  import { getRandomString, setInputNumeric } from './helpers'
+  import {getRandomString, setInputNumeric} from './helpers'
   import settings from './settings'
   import {bus} from './bus'
 
@@ -212,7 +212,7 @@
       StatsBar,
       UserStats,
       NavBar,
-      BetControls
+      BetControls,
     },
     mounted () {
       document.title = settings.AppName
@@ -220,7 +220,7 @@
         this.$store.dispatch('login', {
           access_token: this.getHashParams().access_token,
           expires_in: this.getHashParams().expires_in
-        })
+        });
       }
 
       if (window.history && window.history.replaceState) {

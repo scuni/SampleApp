@@ -69,7 +69,7 @@ const mutations = {
       state.Balance = Balance
     }
   },
-  [types.SET_USERSTATS] (state, { stats }) {
+  [types.SET_USERSTATS] (state, {stats}) {
     state.UserStats = stats
   },
   [types.SET_STATS] (state, {Currency, NumBets, MaxWin, Bankroll, Wagered, Profit}) {
@@ -188,7 +188,7 @@ const actions = {
   },
   loadUserStats ({commit, state}) {
     api.getUserStats(state.UserName).then(function (response) {
-      commit(types.SET_USERSTATS, { stats: response.data })
+      commit(types.SET_USERSTATS, {stats: response.data})
     })
     .catch(showError)
   },

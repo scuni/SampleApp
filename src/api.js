@@ -3,7 +3,7 @@ import Settings from './settings'
 import {showError} from './helpers'
 import token from './token'
 
-const headers = () => ({ headers: { Authorization: `Bearer ${token.get()}` } })
+const headers = () => ({headers: {Authorization: `Bearer ${token.get()}`}})
 
 export default {
   bet (chance, betAmount, target, currency) {

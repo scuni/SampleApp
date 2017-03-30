@@ -43,7 +43,7 @@
 </style>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import {currencies} from '../currencies'
 import CurrencyIcon from '@/components/CurrencyIcon'
 
