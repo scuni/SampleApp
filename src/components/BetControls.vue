@@ -174,8 +174,14 @@
           toastr.error('You must login to make a bet')
           return
         }
-        if (this.BetAmount === 0) {
-          toastr.error('You must bet more than 0')
+
+        if (this.BetProfit < 0.00000001) {
+          toastr.error('Profit must be more than 0.00000001')
+          return
+        }
+
+        if (this.BetAmount < settings.MinBetAmount) {
+          toastr.error('You must bet more than ' + settings.MinBetAmount)
           return
         }
 
