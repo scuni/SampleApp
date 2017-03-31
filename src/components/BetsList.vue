@@ -19,11 +19,11 @@
       <td class="red-text">{{ bet.Player }}</td>
       <td>{{ bet.Time }}</td>
       <td><CurrencyIcon v-bind:CurrencySymbol='bet.Currency' v-bind:Width='12'></CurrencyIcon></td>
-      <td>{{ bet.BetAmount.toFixed(8) }}</td>
+      <td v-html="darkenZero(bet.BetAmount.toFixed(8))"></td>
       <td class="hidden-xs">{{ bet.Payout }}x</td>
       <td class="hidden-xs">{{ bet.Target }}</td>
       <td>{{ bet.Roll.toFixed(4) }}</td>
-      <td v-bind:class="formatProfit(bet.Profit)">{{ bet.Profit.toFixed(8) }}</td>
+      <td v-bind:class="formatProfit(bet.Profit)" v-html="darkenZero(bet.Profit.toFixed(8))"></td>
     </tr>
     </tbody>
   </table>
@@ -80,6 +80,10 @@
   .table thead tr th {
     border-bottom: 0 !important;
   }
+
+  .darken {
+    opacity:0.3;
+  }
 </style>
 
 <script>
@@ -99,6 +103,18 @@
     methods: {
       formatProfit (x) {
         return (x < 0) ? 'red-text' : 'green-text';
+      },
+      darkenZero (x) {
+        const parts = x.split('.');
+        let newX = x;
+        let decimalPart = '';
+        
+        if (parts.length === 2) {
+          decimalPart = parts[1].replace(/0(0+)$/, '0<span class="darken">$1</span>');
+          newX = decimalPart.length > 0 ? `${parts[0]}.${decimalPart}` : parts[0];
+        }
+        
+        return newX;
       }
     }
   };
