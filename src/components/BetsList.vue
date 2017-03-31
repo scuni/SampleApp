@@ -110,7 +110,7 @@
         let decimalPart = '';
         
         if (parts.length === 2) {
-          decimalPart = parts[1].replace(/0(0+)$/, '0<span class="darken">$1</span>');
+          decimalPart = parts[1].replace(/(0+)$/, '<span class="darken">$1</span>');
           newX = decimalPart.length > 0 ? `${parts[0]}.${decimalPart}` : parts[0];
         }
         
