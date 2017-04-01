@@ -19,17 +19,18 @@
       <div class='row'>
         <div class='col-xs-12'>
           <ul id="mainTabs" class='nav nav-tabs' role="tablist">
-           <li role="presentation" class='active mainTab highRollerButton' v-on:click.prevent='highRollerButtonClicked'>
-              <a href='#BetsTab'>Highroller</a>
+            <li role="presentation" class='active mainTab'>
+              <a id="highRollerButton" href='#BetsTab' v-on:click.prevent='highRollerButtonClicked'>Highroller</a>
             </li>
-            <li role="presentation" class='mainTab allBetsButton' v-on:click.prevent='allBetsButtonClicked'>
-              <a href='#BetsTab'>All Bets</a>
+            <li role="presentation" class='mainTab'>
+              <a id="allBetsButton" href='#BetsTab' v-on:click.prevent='allBetsButtonClicked'>All Bets</a>
             </li>
-            <li role="presentation" class='mainTab myBetsButton' v-on:click.prevent='myBetsButtonClicked'>
-              <a href='#BetsTab'>My Bets</a>
+            <li role="presentation" class='mainTab'>
+              <a id="myBetsButton" href='#BetsTab' v-on:click.prevent='myBetsButtonClicked'>My Bets</a>
             </li>
             <li role="presentation" class='mainTab'><a href='#ChatTab'>Chat</a></li>
-            <li role="presentation" class='mainTab' v-on:click.prevent='loadUserStats'><a href='#StatsTab'>Stats</a></li>
+            <li role="presentation" class='mainTab'><a href='#StatsTab' v-on:click.prevent='loadUserStats'>Stats</a>
+            </li>
           </ul>
 
           <div class="tab-content">
@@ -182,7 +183,7 @@
 <script>
   import {mapGetters} from 'vuex';
   import $ from 'jquery';
-// eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   import bootstrap from 'bootstrap';
   import BetsList from '@/components/BetsList';
   import RegisterDialog from '@/components/RegisterDialog';
@@ -216,7 +217,7 @@
     },
     mounted () {
       document.title = settings.AppName;
-      
+
       if (this.getHashParams().access_token) {
         this.$store.dispatch('login', {
           access_token: this.getHashParams().access_token,
@@ -243,7 +244,9 @@
         $(this).tab('show');
       });
 
-      bus.$on('new-bet', this.myBetsButtonClicked);
+      bus.$on('new-bet', () => {
+        $('#myBetsButton').click();
+      });
     },
     methods: {
       getHashParams () {
