@@ -44,5 +44,15 @@ export default {
   },
   loadState (currency, clientSeed) {
     return axios.get(`${Settings.ApiBase}api/app/loadstate?currency=${currency}&appId=${Settings.AppId}&clientSeed=${clientSeed}`, token.isNotDefined() ? {} : headers());
+  },
+  loadChatMessages (appId, language) {
+    return axios.get(`${Settings.ApiBase}api/chat/chatmessages?appId=${appId}&language=${language}`, headers());
+  },
+  sendChatMessage (appId, language, message) {
+    return axios.post(`${Settings.ApiBase}api/chat/newchatmessage`, {
+      appId,
+      language,
+      message
+    }, headers());
   }
 };

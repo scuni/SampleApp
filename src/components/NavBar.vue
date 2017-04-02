@@ -46,12 +46,10 @@
 
   export default {
     name: 'NavBar',
-    data: () => {
-      return {
-        LoginUrl: `${Settings.BetKingUrlBase}${Settings.LoginUrl}?appId=${Settings.AppId}`,
-        AccountManageUrl: Settings.BetKingUrlBase + Settings.AccountManageUrl
-      };
-    },
+    data: () => ({
+      LoginUrl: `${Settings.BetKingUrlBase}${Settings.LoginUrl}?appId=${Settings.AppId}`,
+      AccountManageUrl: Settings.BetKingUrlBase + Settings.AccountManageUrl
+    }),
     computed: mapGetters({
       AppName: 'AppName',
       UserName: 'UserName',
@@ -84,7 +82,7 @@
           'top=50'
         ];
         const w = window.open(url, name, options);
-        
+
         w.focus();
       },
       logout () {

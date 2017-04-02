@@ -42,7 +42,8 @@ const state = {
   LatestBets: [],
   HighrollerBets: [],
   UserBets: [],
-  Signalr: null
+  Signalr: null,
+  ChatMessages: {}
 };
 
 const mutations = {
@@ -120,6 +121,16 @@ const mutations = {
   },
   [types.SET_SIGNALR] (state, signalr) {
     state.Signalr = signalr;
+  },
+  [types.SET_CHAT_MESSAGES] (state, {Messages, AppId, Language}) {
+    const key = `${AppId}-${Language}`;
+    state.ChatMessages[key] = state.ChatMessages[key] || [];
+    state.ChatMessages[key].push(...Messages);
+  },
+  [types.ADD_CHAT_MESSAGE] (state, {Message, AppId, Language}) {
+    const key = `${AppId}-${Language}`;
+    state.ChatMessages[key] = state.ChatMessages[key] || [];
+    state.ChatMessages[key].push(Message);
   }
 };
 
@@ -130,12 +141,12 @@ const actions = {
     api.getBalance(currency).then(function (response) {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency});
     })
-    .catch(showError);
-    
+      .catch(showError);
+
     api.getStats(currency).then(function (response) {
       commit(types.SET_STATS, {Currency: currency, ...response.data});
     })
-    .catch(showError);
+      .catch(showError);
   },
   showRegisterDialog ({commit}) {
     commit(types.SET_REGISTER_DIALOG, true);
@@ -155,7 +166,7 @@ const actions = {
       token.remove();
       hub.restart(state.Signalr);
     })
-    .catch(showError);
+      .catch(showError);
   },
   saveClientSeed ({commit}, clientSeed) {
     api.saveClientSeed(clientSeed);
@@ -185,16 +196,24 @@ const actions = {
         commit(types.SET_BALANCE, {Balance: data.Balance, Currency: state.Currency});
         commit(types.SET_SEED, data);
       }
-      
+
       commit(types.SET_BETS, data.Bets);
     })
-    .catch(showError);
+      .catch(showError);
   },
   loadUserStats ({commit, state}) {
     api.getUserStats(state.UserName).then(function (response) {
       commit(types.SET_USERSTATS, {stats: response.data});
     })
-    .catch(showError);
+      .catch(showError);
+  },
+  loadChatMessages ({commit}, {AppId, Language}) {
+    api.loadChatMessages(AppId, Language)
+      .catch(showError);
+  },
+  sendChatMessage ({commit}, {AppId, Language, Message}) {
+    api.sendChatMessage(AppId, Language, Message)
+      .catch(showError);
   },
   setupNotifications ({commit}) {
     const hubConnection = $.hubConnection(Settings.SocketUrl, {useDefaultPath: false});
@@ -271,6 +290,22 @@ const actions = {
       });
     });
 
+    socketHub.on('newChatMessage', (message, appId, language) => {
+      commit(types.ADD_CHAT_MESSAGE, {
+        Message: message,
+        AppId: appId,
+        Language: language
+      });
+    });
+
+    socketHub.on('chatMessages', (messages, appId, language) => {
+      commit(types.SET_CHAT_MESSAGES, {
+        Messages: messages,
+        AppId: appId,
+        Language: language
+      });
+    });
+
     hub.start({hubConnection, socketHub});
   }
 };
@@ -299,7 +334,8 @@ const getters = {
   PreviousClientSeed: state => state.PreviousClientSeed,
   PreviousNonce: state => state.PreviousNonce,
   WaitingOnBetResult: state => state.WaitingOnBetResult,
-  ProvablyFairDialogVisible: state => state.ProvablyFairDialogVisible
+  ProvablyFairDialogVisible: state => state.ProvablyFairDialogVisible,
+  ChatMessages: state => state.ChatMessages
 };
 
 export default new Vuex.Store({

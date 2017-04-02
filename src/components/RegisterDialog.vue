@@ -48,11 +48,9 @@
 
   export default {
     name: 'RegisterDialog',
-    data: () => {
-      return {
-        RegisterUrl: `${Settings.BetKingUrlBase}${Settings.RegisterUrl}?appId=${Settings.AppId}`
-      };
-    },
+    data: () => ({
+      RegisterUrl: `${Settings.BetKingUrlBase}${Settings.RegisterUrl}?appId=${Settings.AppId}`
+    }),
     computed: mapGetters({
       AppName: 'AppName'
     })

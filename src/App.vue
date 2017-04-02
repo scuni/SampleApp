@@ -38,7 +38,7 @@
               <BetsList v-bind:ActiveBets='ActiveBets'>
               </BetsList>
             </div>
-            <div role="tabpanel" class="tab-pane" id="ChatTab">Coming soon</div>
+            <div role="tabpanel" class="tab-pane" id="ChatTab"><Chat/></div>
             <div role="tabpanel" class="tab-pane" id="StatsTab">
               <UserStats>
               </UserStats>
@@ -189,6 +189,7 @@
   import RegisterDialog from '@/components/RegisterDialog';
   import StatsBar from '@/components/StatsBar';
   import UserStats from '@/components/UserStats';
+  import Chat from '@/components/Chat';
   import NavBar from '@/components/NavBar';
   import BetControls from '@/components/BetControls';
   import {getRandomString, setInputNumeric} from './helpers';
@@ -209,6 +210,7 @@
     }),
     components: {
       BetsList,
+      Chat,
       RegisterDialog,
       StatsBar,
       UserStats,
