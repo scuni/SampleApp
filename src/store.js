@@ -124,13 +124,13 @@ const mutations = {
   },
   [types.SET_CHAT_MESSAGES] (state, {Messages, AppId, Language}) {
     const key = `${AppId}-${Language}`;
-    state.ChatMessages[key] = state.ChatMessages[key] || [];
+    Vue.set(state.ChatMessages, key, state.ChatMessages[key] || []);
     state.ChatMessages[key].push(...Messages);
   },
   [types.ADD_CHAT_MESSAGE] (state, {Message, AppId, Language}) {
     const key = `${AppId}-${Language}`;
-    state.ChatMessages[key] = state.ChatMessages[key] || [];
-    state.ChatMessages[key].push(Message);
+    Vue.set(state.ChatMessages, key, state.ChatMessages[key] || []);
+    Vue.set(state.ChatMessages[key], state.ChatMessages[key].length, Message);
   }
 };
 
