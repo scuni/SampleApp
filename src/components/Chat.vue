@@ -2,14 +2,16 @@
   <div class="row">
     <div class="col-xs-12">
       <div v-if="ConnectionNeeded">Sign in to chat</div>
-      <ul v-if="!ConnectionNeeded" class='nav nav-tabs' role="tablist">
-        <li v-for="Channel in Channels" role="presentation" v-bind:class="{ active: Channel === CurrentChannel }">
-          <a href='#' v-on:click.prevent='CurrentChannel = Channel'>{{ Channel }}</a>
-        </li>
-      </ul>
-      <div v-for="Message in Messages">{{ Message }}</div>
-      <textarea class="form-control" v-model="Message" placeholder="Your message"></textarea>
-      <button type="button" class="btn btn-default" v-on:click.prevent='send'>Send</button>
+      <div v-if="!ConnectionNeeded">
+        <ul class='nav nav-tabs' role="tablist">
+          <li v-for="Channel in Channels" role="presentation" v-bind:class="{ active: Channel === CurrentChannel }">
+            <a href='#' v-on:click.prevent='CurrentChannel = Channel'>{{ Channel }}</a>
+          </li>
+        </ul>
+        <div v-for="Message in Messages">{{ Message }}</div>
+        <textarea class="form-control" v-model="Message" placeholder="Your message"></textarea>
+        <button type="button" class="btn btn-default" v-on:click.prevent='send'>Send</button>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +22,6 @@
 
 <script>
   import {bus} from '../bus';
-  import token from '../token';
   import settings from '../settings';
   import {mapGetters} from 'vuex';
 
@@ -29,7 +30,7 @@
     data: () => ({
       Channels: [],
       CurrentChannel: null,
-      ConnectionNeeded: false,
+      ConnectionNeeded: true,
       Message: ''
     }),
     computed: {
@@ -41,16 +42,15 @@
       }
     },
     mounted () {
-      if (!token.isNotDefined()) {
-        bus.$on('notifications-started', () => {
-          this.addChannel({AppId: settings.AppId, Language: 'EN'});
-          if (settings.AppId !== 0) {
-            this.addChannel({AppId: 0, Language: 'EN'});
-          }
-        });
-      } else {
-        this.ConnectionNeeded = true;
-      }
+      bus.$on('user-connected', () => {
+        this.ConnectionNeeded = false;
+      });
+      bus.$on('notifications-started', () => {
+        this.addChannel({AppId: settings.AppId, Language: 'EN'});
+        if (settings.AppId !== 0) {
+          this.addChannel({AppId: 0, Language: 'EN'});
+        }
+      });
     },
     methods: {
       channelKey (channel) {

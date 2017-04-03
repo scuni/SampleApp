@@ -195,6 +195,7 @@ const actions = {
         commit(types.SET_USERNAME, data.UserName);
         commit(types.SET_BALANCE, {Balance: data.Balance, Currency: state.Currency});
         commit(types.SET_SEED, data);
+        bus.$emit('user-connected');
       }
 
       commit(types.SET_BETS, data.Bets);
