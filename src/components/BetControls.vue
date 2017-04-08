@@ -292,9 +292,9 @@
         this.updateProfit();
       },
       minBetAmount () {
-        var s = settings.MinBetAmount;
+        let s = settings.MinBetAmount;
         if (this.Payout < 2) {
-          var payoutInverseMultiplier = 1 / (this.Payout - 1);
+          const payoutInverseMultiplier = 1 / (this.Payout - 1);
           s *= Math.round(payoutInverseMultiplier);
           
           if (payoutInverseMultiplier % 1 > 0 && (payoutInverseMultiplier % 1) < 0.5) {

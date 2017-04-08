@@ -155,9 +155,8 @@ const actions = {
 
     api.getBalance(currency).then(function (response) {
       commit(types.SET_BALANCE, {Balance: response.data.Balance, Currency: currency});
-    })
-      .catch(showError);
-
+    });
+    
     api.getStats(currency).then(function (response) {
       commit(types.SET_STATS, {Currency: currency, ...response.data});
     })
