@@ -181,7 +181,7 @@ const actions = {
       token.remove();
       hub.restart(state.Signalr);
     })
-      .catch(showError);
+    .catch(showError);
   },
   saveClientSeed ({commit}, clientSeed) {
     api.saveClientSeed(clientSeed);
@@ -215,13 +215,13 @@ const actions = {
 
       commit(types.SET_BETS, data.Bets);
     })
-      .catch(showError);
+    .catch(showError);
   },
   loadUserStats ({commit, state}) {
     api.getUserStats(state.UserName).then(function (response) {
       commit(types.SET_USERSTATS, {stats: response.data});
     })
-      .catch(showError);
+    .catch(showError);
   },
   loadChatMessages ({commit, state}, {AppId, Language}) {
     state.Signalr.socketHub.invoke('joinChat', AppId, Language);
