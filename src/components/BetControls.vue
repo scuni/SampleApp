@@ -175,6 +175,11 @@
           return;
         }
 
+        if (this.BetAmount > this.Balance) {
+          toastr.error('Balance too low');
+          return;
+        }
+
         if (this.BetProfit < 0.00000001) {
           toastr.error('Profit must be more than 0.00000001');
           return;
@@ -182,11 +187,6 @@
 
         if (this.BetAmount < settings.MinBetAmount) {
           toastr.error(`You must bet more than ${settings.MinBetAmount}`);
-          return;
-        }
-
-        if (this.BetAmount > this.Balance) {
-          toastr.error('Balance too low');
           return;
         }
 

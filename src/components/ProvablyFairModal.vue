@@ -28,7 +28,7 @@
                           <div class="row">
                             <div class="col-xs-9">
                               <input id="ClientSeed" :disabled="EditClientSeedDisabled"
-                                     v-model="ClientSeed" class="form-control" type="text"
+                                     v-model="ClientSeedText" class="form-control" type="text"
                                      autocomplete="off">
                             </div>
                             <div class="col-xs-1">
@@ -242,12 +242,11 @@
 
   export default {
     name: 'ProvablyFairModal',
-    data: () => {
-      return {
-        EditClientSeedDisabled: true,
-        EditClientSeedText: 'Edit'
-      };
-    },
+    data: () => ({
+      ClientSeedText: '',
+      EditClientSeedDisabled: true,
+      EditClientSeedText: 'Edit'
+    }),
     computed: mapGetters({
       ServerSeedHash: 'ServerSeedHash',
       ClientSeed: 'ClientSeed',
@@ -257,19 +256,22 @@
       PreviousClientSeed: 'PreviousClientSeed',
       PreviousNonce: 'PreviousNonce'
     }),
+    mounted () {
+      this.ClientSeedText = this.ClientSeed;
+    },
     methods: {
       editClientSeed () {
         this.EditClientSeedDisabled = !this.EditClientSeedDisabled;
         
         if (this.EditClientSeedDisabled === true) {
           this.EditClientSeedText = 'Edit';
-          this.$store.dispatch('saveClientSeed', this.ClientSeed);
+          this.$store.dispatch('saveClientSeed', this.ClientSeedText);
         } else {
           this.EditClientSeedText = 'Save';
         }
       },
       generateNewSeed () {
-        this.$store.dispatch('generateNewServerSeed', this.ClientSeed);
+        this.$store.dispatch('generateNewServerSeed', this.ClientSeedText);
       }
     }
   };

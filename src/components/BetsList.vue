@@ -72,6 +72,13 @@
     }
   }
 
+  /*ipad pro portrait and larger -- this seems to catch ipad lanscape? */
+  @media only screen and (min-device-width: 1024px) {
+    .table {
+      font-size: 12px;
+    }
+  }
+
   tbody tr td {
     border-top: 0 !important;
     text-align: center;

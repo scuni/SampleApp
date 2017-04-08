@@ -1,16 +1,20 @@
 <template>
   <div class="row">
     <div class="col-xs-12">
+      <ul class='nav nav-tabs' role="tablist">
+        <li v-for="Channel in Channels" role="presentation" v-bind:class="{ active: Channel === CurrentChannel }">
+          <a href='#' v-on:click.prevent='CurrentChannel = Channel'>{{ Channel.Language }} - {{ Channel.AppId }}</a>
+        </li>
+      </ul>
+      <div v-for="Message in Messages">
+        {{ Message.UserName }}: {{ Message.Message }} {{ formatDate(Message.Date) }} 
+      </div>
+      <div v-for="User in Users">
+        {{ User }}
+      </div>
+      <div>Total users: {{ TotalUsers }} ({{ AnonymousUsers }} watching)</div>
       <div v-if="ConnectionNeeded">Sign in to chat</div>
       <div v-if="!ConnectionNeeded">
-        <ul class='nav nav-tabs' role="tablist">
-          <li v-for="Channel in Channels" role="presentation" v-bind:class="{ active: Channel === CurrentChannel }">
-            <a href='#' v-on:click.prevent='CurrentChannel = Channel'>{{ Channel.Language }} - {{ Channel.AppId }}</a>
-          </li>
-        </ul>
-        <div v-for="Message in Messages">
-          {{ Message.UserName }}: {{ Message.Message }} {{ formatDate(Message.Date) }} 
-        </div>
         <textarea class="form-control" v-model="Message" placeholder="Your message"></textarea>
         <button type="button" class="btn btn-default" v-on:click.prevent='send'>Send</button>
       </div>
@@ -38,10 +42,20 @@
     }),
     computed: {
       ...mapGetters({
-        ChatMessages: 'ChatMessages'
+        ChatChannels: 'ChatChannels'
       }),
       Messages () {
-        return this.CurrentChannel ? this.ChatMessages[this.channelKey(this.CurrentChannel)] : [];
+        return this.CurrentChannel ? (this.ChatChannels[this.channelKey(this.CurrentChannel)] || {Messages: []}).Messages : [];
+      },
+      Users () {
+        return this.CurrentChannel ? (this.ChatChannels[this.CurrentChannel.AppId] || {Users: []}).Users : [];
+      },
+      AnonymousUsers () {
+        return this.CurrentChannel ? (this.ChatChannels[this.CurrentChannel.AppId] || {AnonymousUsers: 0}).AnonymousUsers : 0;      
+      },
+      TotalUsers () {
+        return (this.CurrentChannel ? (this.ChatChannels[this.CurrentChannel.AppId] || {Users: []}).Users : []).length +
+          (this.CurrentChannel ? (this.ChatChannels[this.CurrentChannel.AppId] || {AnonymousUsers: 0}).AnonymousUsers : 0);
       }
     },
     mounted () {

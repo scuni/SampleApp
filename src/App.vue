@@ -246,8 +246,10 @@
         $(this).tab('show');
       });
 
+      const that = this;
       bus.$on('new-bet', () => {
         $('#myBetsButton').click();
+        that.ActiveBets = that.UserBets;
       });
     },
     methods: {

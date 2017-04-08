@@ -43,7 +43,7 @@ const state = {
   HighrollerBets: [],
   UserBets: [],
   Signalr: null,
-  ChatMessages: {}
+  ChatChannels: {}
 };
 
 const mutations = {
@@ -112,6 +112,7 @@ const mutations = {
     }
   },
   [types.SET_NEW_DICE_SEED] (state, data) {
+    state.Nonce = data.Nonce;
     state.ClientSeed = data.ClientSeed;
     state.ServerSeedHash = data.ServerSeedHash;
     state.PreviousSeed = data.PreviousSeed;
@@ -122,15 +123,29 @@ const mutations = {
   [types.SET_SIGNALR] (state, signalr) {
     state.Signalr = signalr;
   },
-  [types.SET_CHAT_MESSAGES] (state, {Messages, AppId, Language}) {
+  [types.SET_CHAT_MESSAGES] (state, {Messages, Users, AnonymousUsers, AppId, Language}) {
     const key = `${AppId}-${Language}`;
-    Vue.set(state.ChatMessages, key, state.ChatMessages[key] || []);
-    state.ChatMessages[key].push(...Messages);
+    Vue.set(state.ChatChannels, key, state.ChatChannels[key] || {Messages: []});
+    state.ChatChannels[key].Messages.push(...Messages);
+    Vue.set(state.ChatChannels, AppId, state.ChatChannels[AppId] || {Users: []});
+    state.ChatChannels[AppId].Users.push(...Users);
+    state.ChatChannels[AppId].AnonymousUsers = AnonymousUsers;
   },
   [types.ADD_CHAT_MESSAGE] (state, {Message, AppId, Language}) {
     const key = `${AppId}-${Language}`;
-    Vue.set(state.ChatMessages, key, state.ChatMessages[key] || []);
-    Vue.set(state.ChatMessages[key], state.ChatMessages[key].length, Message);
+    Vue.set(state.ChatChannels[key].Messages, state.ChatChannels[key].Messages.length, Message);
+  },
+  [types.SET_CHAT_ANONYMOUS_USER_COUNT] (state, {Count, AppId}) {
+    state.ChatChannels[AppId].AnonymousUsers = Count;
+  },
+  [types.ADD_CHAT_NEW_USER] (state, {UserName, AppId}) {
+    state.ChatChannels[AppId].Users.push(UserName);
+  },
+  [types.DELETE_CHAT_USER] (state, {UserName, AppId}) {
+    const index = state.ChatChannels[AppId].Users.index(UserName);
+    if (index >= 0) {
+      state.ChatChannels[AppId].Users.splice(index, 1);
+    }
   }
 };
 
@@ -208,13 +223,11 @@ const actions = {
     })
       .catch(showError);
   },
-  loadChatMessages ({commit}, {AppId, Language}) {
-    api.loadChatMessages(AppId, Language)
-      .catch(showError);
+  loadChatMessages ({commit, state}, {AppId, Language}) {
+    state.Signalr.socketHub.invoke('joinChat', AppId, Language);
   },
   sendChatMessage ({commit}, {AppId, Language, Message}) {
-    api.sendChatMessage(AppId, Language, Message)
-      .catch(showError);
+    state.Signalr.socketHub.invoke('newChatMessage', AppId, Language, Message);
   },
   setupNotifications ({commit}) {
     const hubConnection = $.hubConnection(Settings.SocketUrl, {useDefaultPath: false});
@@ -276,7 +289,9 @@ const actions = {
     socketHub.on('newDeposit', (balance, amount, currency, appId) => {
       if (Settings.AppId === appId) {
         commit(types.SET_BALANCE, {Balance: balance, Currency: currency});
-        toastr.info(`New deposit of ${amount} ${currencies[currency].code} received`);
+        if (amount > 0) {
+          toastr.info(`New deposit of ${amount} ${currencies[currency].code} received`);
+        }
       }
     });
 
@@ -299,14 +314,37 @@ const actions = {
       });
     });
 
-    socketHub.on('chatMessages', (messages, appId, language) => {
+    socketHub.on('chatMessages', (messages, users, anonymousUsers, appId, language) => {
       commit(types.SET_CHAT_MESSAGES, {
         Messages: messages,
+        Users: users,
+        AnonymousUsers: anonymousUsers,
         AppId: appId,
         Language: language
       });
     });
 
+    socketHub.on('chatAnonymousUserCount', (appId, count) => {
+      commit(types.SET_CHAT_ANONYMOUS_USER_COUNT, {
+        Count: count,
+        AppId: appId
+      });
+    });
+
+    socketHub.on('chatNewUser', (appId, userName) => {
+      commit(types.ADD_CHAT_NEW_USER, {
+        UserName: userName,
+        AppId: appId
+      });
+    });
+
+    socketHub.on('chatDeletedUser', (appId, userName) => {
+      commit(types.DELETE_CHAT_USER, {
+        UserName: userName,
+        AppId: appId
+      });
+    });
+    
     hub.start({hubConnection, socketHub});
   }
 };
@@ -336,7 +374,7 @@ const getters = {
   PreviousNonce: state => state.PreviousNonce,
   WaitingOnBetResult: state => state.WaitingOnBetResult,
   ProvablyFairDialogVisible: state => state.ProvablyFairDialogVisible,
-  ChatMessages: state => state.ChatMessages
+  ChatChannels: state => state.ChatChannels
 };
 
 export default new Vuex.Store({

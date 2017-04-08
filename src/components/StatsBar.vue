@@ -4,7 +4,7 @@
       <div class="ui-panel2">
         <div class="dropdown-toggle" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true"
              aria-expanded="true">
-          <p id="Balance">{{ Balance }} <CurrencyIcon v-bind:Currency='Currency' v-bind:Width='15'></CurrencyIcon> <span class="caret"></span></p>
+          <p id="Balance">{{ Balance.toFixed(8) }} <CurrencyIcon v-bind:Currency='Currency' v-bind:Width='15'></CurrencyIcon> <span class="caret"></span></p>
         </div>
         <ul class="dropdown-menu" aria-labelledby="currencyMenu">
           <li v-for="currency in Currencies"><a href="#" v-on:click.prevent="onCurrencyChange(currency.value)">{{ currency.name }}</a></li>
@@ -15,28 +15,28 @@
 
     <div class="col-xs-4 col-sm-3 col-md-2">
       <div class="ui-panel2">
-        <p id="MaxWin">{{ MaxWin }}</p>
+        <p id="MaxWin">{{ MaxWin.toFixed(8) }}</p>
         <label for="MaxWin">Max Win</label>
       </div>
     </div>
 
     <div class="col-xs-4 col-sm-3 col-md-2">
       <div class="ui-panel2">
-        <p id="Bankroll">{{ Bankroll }}</p>
+        <p id="Bankroll">{{ Bankroll.toFixed(8) }}</p>
         <label for="Bankroll">Bankroll</label>
       </div>
     </div>
 
     <div class="hidden-xs col-sm-3 col-md-2">
       <div class="ui-panel2">
-        <p id="Wagered">{{ Wagered }}</p>
+        <p id="Wagered">{{ Wagered.toFixed(8) }}</p>
         <label for="Wagered">Wagered</label>
       </div>
     </div>
 
     <div class="hidden-xs hidden-sm col-md-2">
       <div class="ui-panel2">
-        <p id="Profit">{{ Profit }}</p>
+        <p id="Profit">{{ Profit.toFixed(8) }}</p>
         <label for="Profit">Profit</label>
       </div>
     </div>
