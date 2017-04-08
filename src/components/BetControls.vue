@@ -175,7 +175,7 @@
           return;
         }
 
-        if (this.BetAmount > this.Balance) {
+        if (parseFloat(this.BetAmount) > this.Balance) {
           toastr.error('Balance too low');
           return;
         }
@@ -185,12 +185,12 @@
           return;
         }
 
-        if (this.BetAmount < settings.MinBetAmount) {
+        if (parseFloat(this.BetAmount) < settings.MinBetAmount) {
           toastr.error(`You must bet more than ${settings.MinBetAmount}`);
           return;
         }
 
-        this.$store.dispatch('bet', {Chance: this.Chance, BetAmount: this.BetAmount, Target: target});
+        this.$store.dispatch('bet', {Chance: this.Chance, BetAmount: parseFloat(this.BetAmount), Target: target});
       },
       updateTargets () {
         let c = this.Chance;
@@ -246,7 +246,7 @@
         } else if (this.Payout > 0) {
           const p = this.BetAmount * this.Payout - this.BetAmount;
           
-          this.BetProfit = formatDecimal(p, 8);
+          this.BetProfit = p.toFixed(8);
         } else {
           this.BetProfit = 0;
         }
@@ -267,7 +267,7 @@
             p = this.Balance;
           }
 
-          this.BetAmount = formatDecimal(p, 8);
+          this.BetAmount = p.toFixed(8);
         } else {
           this.BetAmount = 0;
         }
@@ -279,20 +279,30 @@
           betAmount = settings.MinBetAmount;
         }
 
-        this.BetAmount = formatDecimal(betAmount, 8);
+        this.BetAmount = betAmount.toFixed(8);
         this.updateProfit();
       },
       doubleBetAmount () {
-        this.BetAmount = formatDecimal(this.BetAmount * 2, 8);
+        this.BetAmount = (this.BetAmount * 2).toFixed(8);
 
-        if (this.BetAmount > this.Balance) {
+        if (parseFloat(this.BetAmount) > this.Balance) {
           this.BetAmount = this.Balance;
         }
 
         this.updateProfit();
       },
       minBetAmount () {
-        this.BetAmount = formatDecimal(settings.MinBetAmount, 8);
+        var s = settings.MinBetAmount;
+        if (this.Payout < 2) {
+          var payoutInverseMultiplier = 1 / (this.Payout - 1);
+          s *= Math.round(payoutInverseMultiplier);
+          
+          if (payoutInverseMultiplier % 1 > 0 && (payoutInverseMultiplier % 1) < 0.5) {
+            s += settings.MinBetAmount;
+          }
+        }
+
+        this.BetAmount = s.toFixed(8);
         this.updateProfit();
       },
       maxBetAmount () {
