@@ -307,7 +307,7 @@
       },
       maxBetAmount () {
         const b = parseFloat(this.Balance);
-        const p = b * parseFloat(this.Payout) - b;
+        let p = b * parseFloat(this.Payout) - b;
 
         if (isNaN(p) || p < 0) {
           p = 0;
