@@ -306,7 +306,14 @@
         this.updateProfit();
       },
       maxBetAmount () {
-        this.BetAmount = this.Balance;
+        const b = parseFloat(this.Balance);
+        const p = b * parseFloat(this.Payout) - b;
+
+        if (isNaN(p) || p < 0) {
+          p = 0;
+        }
+
+        this.BetAmount = formatDecimal(b, 8);
         this.updateProfit();
       }
     }
