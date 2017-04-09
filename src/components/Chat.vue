@@ -14,7 +14,7 @@
                 <div class="chat-item-detail-date">{{ formatDate(Message.Date) }}</div>
                 <div class="chat-item-detail-username">{{ Message.UserName }}</div>
               </div>
-              <div class="chat-item-text">{{ Message.Message }}</div> 
+              <div class="chat-item-text">{{ formatMessage(Message.Message) }}</div> 
             </div>
           </div>
           <div class="chat-actions">
@@ -184,6 +184,9 @@
       },
       formatDate (date) {
         return moment(date).format('HH:mm');
+      },
+      formatMessage (message) {
+        return message.replace(/<(?:.|\n)*?>/gm, '');
       },
       scrollToBottom () {
         const elem = $('#chat-messages')[0];
