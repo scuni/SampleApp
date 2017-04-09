@@ -14,7 +14,7 @@
                 <div class="chat-item-detail-date">{{ formatDate(Message.Date) }}</div>
                 <div class="chat-item-detail-username">{{ Message.UserName }}</div>
               </div>
-              <div class="chat-item-text">{{ formatMessage(Message.Message) }}</div> 
+              <div class="chat-item-text" v-html="formatMessage(Message.Message)"></div>
             </div>
           </div>
           <div class="chat-actions">
@@ -144,7 +144,7 @@
         return this.CurrentChannel ? (this.ChatChannels[this.CurrentChannel.AppId] || {Users: []}).Users : [];
       },
       AnonymousUsers (Channel) {
-        return (this.ChatChannels[Channel.AppId] || {AnonymousUsers: 0}).AnonymousUsers;      
+        return (this.ChatChannels[Channel.AppId] || {AnonymousUsers: 0}).AnonymousUsers;
       },
       TotalUsers (Channel) {
         return ((this.ChatChannels[Channel.AppId] || {Users: []}).Users).length + (this.ChatChannels[Channel.AppId] || {AnonymousUsers: 0}).AnonymousUsers;
