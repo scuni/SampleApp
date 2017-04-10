@@ -64,7 +64,7 @@
   }
 
   .chat-frame {
-    background-color: #3c4e57;
+    background-color: #1b262d;
     position: relative;
     z-index: 100;
     height: 400px;
@@ -107,10 +107,12 @@
 
   .chat-item .chat-item-detail .chat-item-detail-date {
     float:right;
+    color:#878e92;
   }
 
   .chat-item .chat-item-detail .chat-item-detail-username {
     font-weight: bold;
+    color:#878e92;
   }
 
   .chat-item .chat-item-text {
