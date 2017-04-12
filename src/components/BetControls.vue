@@ -9,7 +9,8 @@
               <div class="input-group">
                 <input id="betAmount" v-model="BetAmount" v-on:keyup="updateProfit" class="form-control"
                        type="text" autocomplete="off">
-                <span class="input-group-addon"><CurrencyIcon v-bind:Currency='Currency' v-bind:Width='20'></CurrencyIcon></span>
+                <span class="input-group-addon"><CurrencyIcon v-bind:Currency='Currency'
+                                                              v-bind:Width='20'></CurrencyIcon></span>
               </div>
             </div>
           </div>
@@ -19,7 +20,8 @@
               <div class="input-group">
                 <input id="betProfit" v-model="BetProfit" v-on:keyup="updateBetAmount" class="form-control" type="text"
                        autocomplete="off">
-                <span class="input-group-addon"><CurrencyIcon v-bind:Currency='Currency' v-bind:Width='20'></CurrencyIcon></span>
+                <span class="input-group-addon"><CurrencyIcon v-bind:Currency='Currency'
+                                                              v-bind:Width='20'></CurrencyIcon></span>
               </div>
             </div>
           </div>
@@ -50,7 +52,7 @@
           <div class="col-xs-6">
             <div class="form-group pull-right">
               <button v-on:click="bet(0)" v-bind:disabled="WaitingOnBetResult" id="betHiButton"
-                      class="btn btn-custom" type="button">Hi
+                      class="btn btn-custom" type="button">Hi <span class="shortcut" v-if="ShortcutsEnabled">h</span>
 								<span class="target">{{ HiTarget }}</span>
               </button>
             </div>
@@ -58,7 +60,7 @@
           <div class="col-xs-2">
             <div class="form-group pull-left">
               <button v-on:click="bet(1)" v-bind:disabled="WaitingOnBetResult" id="betLoButton"
-                      class="btn btn-custom" type="button">Lo
+                      class="btn btn-custom" type="button">Lo <span class="shortcut" v-if="ShortcutsEnabled">l</span>
 								<span class="target">{{ LoTarget }}</span>
               </button>
             </div>
@@ -72,10 +74,15 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <button v-on:click="halvedBetAmount" class="btn btn-default" type="button">1/2</button>
-            <button v-on:click="doubleBetAmount" class="btn btn-default" type="button">x2</button>
-            <button v-on:click="minBetAmount" class="btn btn-default" type="button">min</button>
-            <button v-on:click="maxBetAmount" class="btn btn-default" type="button">max</button>
+            <div class="text-center">
+              <button v-on:click="halvedBetAmount" class="btn btn-default" type="button">1/2 <span class="shortcut" v-if="ShortcutsEnabled">x</span></button>
+              <button v-on:click="doubleBetAmount" class="btn btn-default" type="button">x2 <span class="shortcut" v-if="ShortcutsEnabled">c</span></button>
+              <button v-on:click="minBetAmount" class="btn btn-default" type="button">min <span class="shortcut" v-if="ShortcutsEnabled">z</span></button>
+              <button v-on:click="maxBetAmount" class="btn btn-default" type="button">max <span class="shortcut" v-if="ShortcutsEnabled">b</span></button>
+              <button v-on:click="activateShortcuts" class="btn btn-default" type="button" v-bind:class="{active: ShortcutsEnabled}">
+                <i class="fa fa-keyboard-o"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -138,13 +145,21 @@
     margin-top: 9px;
     margin-left: 14px;
   }
+
+  .shortcut {
+    border: 1px dotted white;
+    text-transform: uppercase;
+    padding: 2px;
+  }
 </style>
+
 <script>
   import toastr from 'toastr';
   import {mapGetters} from 'vuex';
   import ProvablyFairModal from '@/components/ProvablyFairModal';
   import CurrencyIcon from '@/components/CurrencyIcon';
   import {formatDecimal} from '../helpers';
+  import {bus} from '../bus';
   import token from '../token';
   import settings from '../settings';
 
@@ -156,7 +171,8 @@
       BetProfit: 0,
       Payout: 2,
       LoTarget: '< 49.5000',
-      HiTarget: '> 50.4999'
+      HiTarget: '> 50.4999',
+      ShortcutsEnabled: false
     }),
     components: {
       ProvablyFairModal,
@@ -168,6 +184,12 @@
       Balance: 'Balance',
       ProvablyFairDialogVisible: 'ProvablyFairDialogVisible'
     }),
+    created () {
+      window.addEventListener('keyup', this.keyUp);
+    },
+    beforeDestroy () {
+      window.removeEventListener('keyup', this.keyUp);
+    },
     methods: {
       bet (target) {
         if (token.isNotDefined()) {
@@ -245,7 +267,7 @@
           this.BetProfit = 0;
         } else if (this.Payout > 0) {
           const p = this.BetAmount * this.Payout - this.BetAmount;
-          
+
           this.BetProfit = p.toFixed(8);
         } else {
           this.BetProfit = 0;
@@ -272,7 +294,7 @@
           this.BetAmount = 0;
         }
       },
-      halvedBetAmount (e) {
+      halvedBetAmount () {
         let betAmount = this.BetAmount / 2;
 
         if (betAmount < settings.MinBetAmount) {
@@ -296,7 +318,7 @@
         if (this.Payout < 2) {
           const payoutInverseMultiplier = 1 / (this.Payout - 1);
           s *= Math.round(payoutInverseMultiplier);
-          
+
           if (payoutInverseMultiplier % 1 > 0 && (payoutInverseMultiplier % 1) < 0.5) {
             s += settings.MinBetAmount;
           }
@@ -315,6 +337,31 @@
 
         this.BetAmount = formatDecimal(b, 8);
         this.updateProfit();
+      },
+      activateShortcuts () {
+        this.ShortcutsEnabled = !this.ShortcutsEnabled;
+        bus.$emit('lock-chat', this.ShortcutsEnabled);
+      },
+      shortcutsButtonClass () {
+        return this.ShortcutsEnabled ? 'active' : '';
+      },
+      keyUp (e) {
+        if (this.ShortcutsEnabled) {
+          const {key} = e;
+          if (key === 'h') {
+            this.bet(0);
+          } else if (key === 'l') {
+            this.bet(1);
+          } else if (key === 'z') {
+            this.minBetAmount();
+          } else if (key === 'x') {
+            this.halvedBetAmount();
+          } else if (key === 'c') {
+            this.doubleBetAmount();
+          } else if (key === 'b') {
+            this.maxBetAmount();
+          }
+        }
       }
     }
   };

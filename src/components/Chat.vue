@@ -20,7 +20,7 @@
           <div class="chat-actions">
             <div class="chat-sign-in" v-if="ConnectionNeeded">Sign in to chat</div>
             <div v-if="!ConnectionNeeded">
-              <input type="text" class="form-control" v-model="Message" placeholder="Your message" v-on:keyup.enter='send'></input>
+              <input type="text" class="form-control" v-model="Message" placeholder="Your message" v-on:keyup.enter='send' :disabled="ChatLocked"/>
             </div>
           </div>
         </div>
@@ -133,7 +133,8 @@
       Channels: [],
       CurrentChannel: null,
       ConnectionNeeded: true,
-      Message: ''
+      Message: '',
+      ChatLocked: false
     }),
     computed: {
       ...mapGetters({
@@ -161,6 +162,9 @@
         if (settings.AppId !== 0) {
           this.addChannel({AppId: 0, Language: 'EN', Name: 'Betking'});
         }
+      });
+      bus.$on('lock-chat', (value) => {
+        this.ChatLocked = value;
       });
     },
     updated () {
